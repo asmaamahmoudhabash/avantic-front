@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-en="Client Portal — Avantic Pharma" data-ar="بوابة العميل — أفانتيك فارما">Client Portal — Avantic Pharma</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =============================================
+       BRAND TOKENS
+    ============================================= */
+    :root {
+      --color-primary:      #29ABE2;
+      --color-dark-blue:    rgb(0, 24, 60);
+      --brand-deep:         #105791;
+      --brand-mid:          #1f83c8;
+      --brand-light:        #2FB9FF;
+      --brand-gradient:     linear-gradient(135deg, var(--brand-deep) 0%, var(--brand-mid) 50%, var(--brand-light) 100%);
+      --color-bg:           #f0f8ff;
+      --color-white:        #ffffff;
+      --color-text-dark:    rgb(0, 24, 60);
+      --color-text-muted:   #6c8098;
+      --font-en: 'Poppins', sans-serif;
+      --font-ar: 'Cairo', sans-serif;
+      --shadow-sm: 0 4px 15px rgba(31,78,140,0.06);
+      --shadow-md: 0 10px 40px rgba(31,78,140,0.12);
+      --transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-en); color: var(--color-text-dark); background: var(--color-bg); line-height: 1.7; overflow-x: hidden; }
+    body.rtl { font-family: var(--font-ar); direction: rtl; text-align: right; }
+    img { max-width: 100%; height: auto; display: block; }
+    a { text-decoration: none; transition: var(--transition); }
+
+    .reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* =============================================
+       TYPOGRAPHY SCALE
+    ============================================= */
+    .nav-link       { font-size: 13px !important; font-weight: 500 !important; }
+    html[lang="en"] h1, html[lang="en"] h2, html[lang="en"] h3 { font-family: 'Poppins', sans-serif; font-weight: 500; }
+    html[lang="en"] p, html[lang="en"] li { font-size: 0.92rem; font-weight: 400; }
+    html[lang="en"] .nav-link, html[lang="en"] .btn { font-size: 12.5px; font-weight: 500; }
+
+    /* =============================================
+       NAVBAR
+    ============================================= */
+    @keyframes slideDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to   { transform: translateY(0);     opacity: 1; }
+    }
+    @keyframes navFadeIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .navbar {
+      background: var(--color-white);
+      min-height: 75px;
+      padding: 25px 0;
+      border-bottom: 1px solid rgba(41,171,226,0.1);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1050;
+      overflow: visible;
+      animation: slideDown 0.6s ease-out forwards;
+    }
+    .navbar.scrolled {
+      background: rgba(255,255,255,0.8) !important;
+      backdrop-filter: blur(12px) saturate(180%);
+      min-height: 65px;
+      box-shadow: 0 4px 30px rgba(31,78,140,0.08);
+    }
+    .nav-progress { position: absolute; bottom: 0; left: 0; height: 2px; background: var(--brand-gradient); width: 0%; transition: width 0.1s linear; z-index: 1060; }
+    .navbar__container { display: flex; align-items: center; min-height: 70px; gap: 0; }
+
+    .navbar__brand { display: flex; align-items: center; gap: 10px; text-decoration: none; order: 1; flex-shrink: 0; transition: transform 0.3s ease; }
+    .navbar__brand:hover { transform: scale(1.02); }
+    .navbar__logo {
+      height: 70px;
+      width: 70px;
+      object-fit: cover;
+      border-radius: 50%;
+      transition: filter 0.3s ease;
+    }
+    .navbar__brand:hover .navbar__logo {
+      filter: drop-shadow(0 0 8px rgba(41,171,226,0.4));
+    }
+    .navbar__brand-text {
+      font-size: 1.85rem; font-weight: 500; color: var(--color-dark-blue);
+      letter-spacing: 0.08em; background: var(--color-dark-blue);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+      transition: all 0.4s ease;
+    }
+    .navbar__brand:hover .navbar__brand-text { background: var(--brand-gradient); -webkit-background-clip: text; background-clip: text; }
+
+    #navMenu { order: 2; }
+
+    .navbar-nav .nav-item { opacity: 0; animation: navFadeIn 0.4s ease forwards; }
+    .navbar-nav .nav-item:nth-child(1) { animation-delay: 0.10s; }
+    .navbar-nav .nav-item:nth-child(2) { animation-delay: 0.18s; }
+    .navbar-nav .nav-item:nth-child(3) { animation-delay: 0.26s; }
+    .navbar-nav .nav-item:nth-child(4) { animation-delay: 0.34s; }
+    .navbar-nav .nav-item:nth-child(5) { animation-delay: 0.42s; }
+    .navbar-nav .nav-item:nth-child(6) { animation-delay: 0.50s; }
+    .navbar-nav .nav-item:nth-child(7) { animation-delay: 0.58s; }
+
+    .navbar-nav .nav-link {
+      font-size: 13px; font-weight: 500; color: var(--color-text-dark);
+      padding: 8px 14px !important; border-radius: 50px;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      white-space: nowrap; margin: 0 2px; border: 1px solid transparent;
+    }
+    .navbar-nav .nav-link:hover { color: var(--color-primary); background: rgba(41,171,226,0.08); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(41,171,226,0.12); border-color: rgba(41,171,226,0.15); }
+    .navbar-nav .nav-link.active { color: var(--color-white) !important; background: var(--brand-gradient); box-shadow: 0 10px 25px rgba(31,131,200,0.3); border-color: transparent; }
+
+    /* ---- Mega Menu — Desktop ---- */
+    @media (min-width: 992px) {
+      .navbar, .navbar__container, .navbar-collapse, .navbar-nav { overflow: visible !important; }
+      .mega-dropdown { position: relative !important; }
+
+      .mega-menu {
+        position: absolute !important;
+        top: 100% !important;
+        left: -150px !important;
+        width: 850px !important;
+        max-width: 90vw !important;
+        transform: none !important;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(20px);
+        border-radius: 32px;
+        box-shadow: 0 40px 100px rgba(0, 24, 60, 0.15), 0 10px 40px rgba(41, 171, 226, 0.1);
+        padding: 1.5rem 2rem;
+        display: none;
+        z-index: 100000;
+        border: 1px solid rgba(41, 171, 226, 0.15);
+        border-top: 4px solid var(--color-primary);
+        animation: megaSlideInFadeFixed 0.3s ease forwards;
+        margin-top: 10px;
+      }
+      /* Transparent bridge to prevent hover loss */
+      .mega-dropdown::after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        height: 20px;
+        z-index: 10;
+      }
+
+      .mega-menu::before {
+        content: '';
+        position: absolute;
+        top: -12px;
+        left: 170px;
+        margin-left: 0;
+        border-left: 12px solid transparent;
+        border-right: 12px solid transparent;
+        border-bottom: 12px solid var(--color-primary);
+      }
+      [dir="rtl"] .mega-menu::before { left: auto; right: 170px; }
+
+      .mega-dropdown:hover .mega-menu { display: block; }
+
+      @keyframes megaSlideInFadeFixed {
+        from { opacity: 0; transform: translateY(10px) scale(0.98); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
+      }
+
+      /* Preview Card */
+      .mega-menu__preview {
+        position: relative;
+        border-radius: 20px;
+        overflow: hidden;
+        height: 100%;
+        min-height: 300px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+      .mega-menu__preview img {
+          width: 100%; height: 100%; object-fit: cover;
+          transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .mega-menu__preview:hover img { transform: scale(1.05); }
+      .mega-menu__preview-content {
+        position: absolute; bottom: 0; left: 0; right: 0; padding: 30px 25px;
+        background: linear-gradient(to top, rgba(0, 24, 60, 0.95) 0%, rgba(0, 24, 60, 0.7) 40%, transparent 100%);
+        color: #fff;
+        transition: padding-bottom 0.4s ease;
+      }
+      .mega-menu__preview:hover .mega-menu__preview-content { padding-bottom: 50px; }
+      .mega-menu__preview-content h4 { font-size: 1.5rem; font-weight: 600; margin-bottom: 10px; color: #fff;}
+      .mega-menu__preview-content p { font-size: 0.85rem; opacity: 0.9; margin: 0; line-height: 1.4;}
+
+      .mega-menu__cta-btn {
+        display: inline-flex; align-items: center; gap: 8px;
+        margin-top: 18px; padding: 10px 24px;
+        background: var(--brand-gradient); color: #fff !important;
+        border-radius: 50px; font-size: 0.82rem; font-weight: 600;
+        text-decoration: none; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 0 4px 15px rgba(31, 131, 200, 0.3);
+      }
+      .mega-menu__cta-btn:hover {
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 10px 25px rgba(31, 131, 200, 0.45);
+      }
+      .mega-menu__cta-btn i { font-size: 0.9rem; transition: transform 0.3s; }
+      .mega-menu__cta-btn:hover i { transform: translateX(4px); }
+      [dir="rtl"] .mega-menu__cta-btn:hover i { transform: translateX(-4px); }
+
+      /* Links Section */
+      .mega-menu__title {
+        font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+        color: var(--color-primary); letter-spacing: 0.12em; margin-bottom: 1.5rem;
+        display: inline-block; padding: 8px 18px;
+        background: linear-gradient(135deg, rgba(41,171,226,0.1) 0%, rgba(41,171,226,0.03) 100%);
+        border-radius: 50px; border: 1px solid rgba(41,171,226,0.1);
+      }
+      .mega-menu__list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 14px; }
+      .mega-menu__list a {
+        display: flex; align-items: center; gap: 10px; font-size: 0.92rem;
+        color: var(--color-dark-blue); font-weight: 500; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        padding: 10px 14px; border-radius: 12px; background: transparent;
+        white-space: nowrap;
+      }
+      .mega-menu__list a i {
+          color: var(--color-primary); font-size: 1rem; transition: all 0.3s ease;
+          width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;
+          background: rgba(41,171,226,0.08); border-radius: 8px; flex-shrink: 0;
+      }
+      .mega-menu__list a:hover {
+          color: var(--color-primary);
+          background: #f4fbff;
+          transform: translateX(8px);
+          box-shadow: 0 4px 15px rgba(41, 171, 226, 0.08);
+      }
+      .mega-menu__list a:hover i {
+          background: var(--color-primary);
+          color: #fff;
+          transform: scale(1.1);
+      }
+      [dir="rtl"] .mega-menu__list a:hover { transform: translateX(-8px); }
+    }
+
+    /* ---- Mega Menu — Mobile ---- */
+    @media (max-width: 991px) {
+      .mega-menu-wrapper { display: none; }
+      .mega-menu { display: none; padding: 8px 0; }
+      .mega-dropdown.open .mega-menu { display: block; }
+      .mega-menu__inner { flex-direction: column; }
+      .mega-menu__sidebar { display: none; }
+      .mega-menu__content { padding: 0; }
+      .mega-menu__section-label { font-size: 0.8rem; color: var(--color-primary); margin: 12px 0 6px 16px; font-weight: 600; }
+      [dir="rtl"] .mega-menu__section-label { margin: 12px 16px 6px 0; }
+      .mega-menu__grid { grid-template-columns: 1fr; gap: 0; margin-bottom: 0; }
+      .mega-menu__item { padding: 10px 20px; border-radius: 0; border-left: 2px solid transparent; }
+      .mega-menu__item:hover { background: rgba(41,171,226,0.05); border-left-color: var(--color-primary); transform: none; }
+      [dir="rtl"] .mega-menu__item { border-left: none; border-right: 2px solid transparent; }
+      [dir="rtl"] .mega-menu__item:hover { border-right-color: var(--color-primary); }
+      .mega-menu__item-icon { display: none; }
+      .mega-menu__item-desc { display: none; }
+      .mega-menu__footer { display: none; }
+    }
+
+    /* Actions */
+    .navbar__actions { order: 3; display: flex; align-items: center; gap: 12px; margin-left: 1.25rem; flex-shrink: 0; }
+    [dir="rtl"] .navbar__actions { order: 3; margin-left: 0; margin-right: 1.25rem; }
+
+    .nav-btn-register {
+      display: inline-flex; align-items: center; gap: 6px; font-size: 0.85rem; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.5px; color: #fff; background: var(--brand-gradient);
+      padding: 6px 16px; border-radius: 50px; box-shadow: 0 4px 15px rgba(31,131,200,0.3);
+      text-decoration: none; transition: all 0.3s ease;
+    }
+    .nav-btn-register:hover { box-shadow: 0 6px 20px rgba(31,78,140,0.4); transform: translateY(-2px); color: #fff; }
+
+    .lang-dropdown { position: relative; }
+    .lang-toggle { width: 44px; height: 44px; border: 1px solid rgba(41,171,226,0.2); border-radius: 50%; background: rgba(255,255,255,0.8); color: var(--color-dark-blue); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; cursor: pointer; transition: all 0.3s ease; }
+    .lang-toggle:hover { background: var(--brand-gradient); color: white; border-color: transparent; transform: rotate(15deg) scale(1.1); }
+    .lang-menu { position: absolute; top: 130%; right: 0; background: white; border-radius: 16px; box-shadow: 0 15px 45px rgba(0,0,0,0.1); padding: 10px; min-width: 150px; display: none; z-index: 1000; animation: navFadeIn 0.3s ease; }
+    .lang-menu.show { display: block; }
+    .lang-menu button { width: 100%; text-align: left; padding: 10px 15px; border: none; background: none; font-size: 13px; font-weight: 500; color: var(--color-dark-blue); border-radius: 10px; transition: all 0.25s; display: flex; align-items: center; gap: 10px; cursor: pointer; }
+    .lang-menu button:hover { background: rgba(41,171,226,0.08); color: var(--brand-mid); padding-left: 20px; }
+    [dir="rtl"] .lang-menu { right: auto; left: 0; }
+
+    .navbar-toggler { border: none !important; box-shadow: none !important; background: none; padding: 8px; order: 4; flex-shrink: 0; display: flex; flex-direction: column; gap: 5px; cursor: pointer; }
+    .navbar__bar { display: block; width: 22px; height: 2px; background: var(--color-primary); border-radius: 2px; transition: all 0.3s ease; }
+
+    @media (max-width: 991.98px) {
+      .navbar { padding: 12px 0 !important; min-height: 70px !important; }
+      .navbar__brand-text { font-size: 1.35rem !important; }
+      .navbar__container { display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; align-items: center !important; justify-content: space-between !important; }
+      .navbar__brand { order: 1 !important; margin: 0 !important; }
+      .navbar__actions { order: 2 !important; margin: 0 auto 0 0.75rem !important; flex-shrink: 0 !important; }
+      .navbar-toggler { order: 3 !important; margin: 0 !important; }
+      .navbar-collapse { position: absolute; top: 100%; left: 10px; right: 10px; background: #fff !important; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,24,60,0.18); margin-top: 12px; padding: 1.5rem 1rem !important; border: 1px solid rgba(41,171,226,0.12) !important; z-index: 1100; border-top: 2px solid var(--color-primary) !important; }
+      .navbar-nav { flex-direction: column !important; align-items: center !important; gap: 8px !important; padding: 0 !important; margin: 0 !important; }
+      .navbar-nav .nav-link { width: 100%; text-align: center; padding: 12px !important; font-size: 1.05rem !important; border-radius: 12px; }
+    }
+    @media (max-width: 450px) {
+      .nav-btn-register span { display: none; }
+      .nav-btn-register { padding: 8px 12px; }
+      .navbar__brand-text { display: none !important; }
+      .navbar__actions { gap: 6px; }
+    }
+
+    /* =============================================
+       WELCOME BANNER
+    ============================================= */
+    .portal-hero {
+      background: var(--brand-gradient);
+      padding: 4rem 0 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .portal-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url('assets/images/cta-bg.png') center/cover;
+      opacity: 0.08;
+    }
+    .portal-hero__content { position: relative; z-index: 2; color: #fff; }
+    .portal-hero__tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.18); backdrop-filter: blur(10px);
+      padding: 6px 18px; border-radius: 50px; font-size: 0.78rem;
+      font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+      margin-bottom: 1rem; color: #fff; border: 1px solid rgba(255,255,255,0.25);
+    }
+    .portal-hero h1 { font-size: clamp(1.6rem, 3.5vw, 2.4rem); font-weight: 600; margin-bottom: 0.5rem; color: #fff; }
+    .portal-hero p { font-size: 0.95rem; color: rgba(255,255,255,0.85); margin: 0; }
+    .portal-hero__logout {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+      color: #fff; padding: 8px 20px; border-radius: 50px; font-size: 0.82rem;
+      font-weight: 500; cursor: pointer; transition: all 0.3s ease; text-decoration: none;
+    }
+    .portal-hero__logout:hover { background: rgba(255,255,255,0.28); color: #fff; transform: translateY(-2px); }
+
+    /* =============================================
+       PORTAL CONTENT
+    ============================================= */
+    .portal-section { padding: 4rem 0 6rem; }
+    .portal-section-title {
+      font-size: 1.05rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--color-primary);
+      display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem;
+    }
+    .portal-section-title::after { content: ''; flex: 1; height: 1px; background: rgba(41,171,226,0.2); }
+
+    /* PDF Cards */
+    .pdf-card {
+      background: #fff; border-radius: 16px;
+      border: 1px solid rgba(41,171,226,0.12);
+      box-shadow: 0 4px 20px rgba(31,78,140,0.06);
+      padding: 22px 24px; display: flex; align-items: center; gap: 18px;
+      transition: all 0.35s ease; cursor: default;
+    }
+    .pdf-card:hover { transform: translateY(-4px); box-shadow: 0 12px 35px rgba(31,78,140,0.12); border-color: rgba(41,171,226,0.3); }
+    .pdf-card__icon {
+      width: 52px; height: 52px; border-radius: 14px; flex-shrink: 0;
+      background: linear-gradient(135deg, #ff4444, #ff6b6b);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 1.4rem;
+      box-shadow: 0 4px 12px rgba(255,68,68,0.3);
+    }
+    .pdf-card__info { flex-grow: 1; min-width: 0; }
+    .pdf-card__name { font-size: 0.92rem; font-weight: 600; color: var(--color-dark-blue); margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .pdf-card__meta { font-size: 0.78rem; color: var(--color-text-muted); display: flex; align-items: center; gap: 12px; }
+    .pdf-card__actions { display: flex; gap: 8px; flex-shrink: 0; }
+    .pdf-btn {
+      width: 36px; height: 36px; border-radius: 10px; border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+    .pdf-btn--view { background: rgba(41,171,226,0.1); color: var(--color-primary); }
+    .pdf-btn--view:hover { background: var(--color-primary); color: #fff; transform: scale(1.1); }
+    .pdf-btn--download { background: rgba(16,87,145,0.1); color: var(--brand-deep); }
+    .pdf-btn--download:hover { background: var(--brand-deep); color: #fff; transform: scale(1.1); }
+
+    /* Video Cards */
+    .video-card {
+      background: #fff; border-radius: 16px;
+      border: 1px solid rgba(41,171,226,0.12);
+      box-shadow: 0 4px 20px rgba(31,78,140,0.06);
+      overflow: hidden; transition: all 0.35s ease;
+      display: flex; flex-direction: column; height: 100%;
+    }
+    .video-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(31,78,140,0.14); border-color: rgba(41,171,226,0.3); }
+    .video-card__thumb {
+      position: relative; height: 175px; overflow: hidden;
+      background: linear-gradient(135deg, #0a3d6b, #1a6fa8);
+      flex-shrink: 0;
+    }
+    .video-card__thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+    .video-card:hover .video-card__thumb img { transform: scale(1.06); }
+    .video-card__play {
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+      background: rgba(0,0,0,0.25); transition: background 0.3s ease;
+    }
+    .video-card:hover .video-card__play { background: rgba(0,0,0,0.4); }
+    .video-card__play-btn {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: rgba(255,255,255,0.95); color: var(--brand-deep);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    .video-card:hover .video-card__play-btn { transform: scale(1.15); background: var(--brand-gradient); color: #fff; }
+    .video-card__play-btn i { margin-left: 3px; }
+    .video-card__duration {
+      position: absolute; bottom: 10px; right: 10px;
+      background: rgba(0,0,0,0.7); color: #fff;
+      padding: 3px 9px; border-radius: 6px; font-size: 0.72rem; font-weight: 600;
+    }
+    [dir="rtl"] .video-card__duration { right: auto; left: 10px; }
+    .video-card__body { padding: 18px 20px; display: flex; flex-direction: column; flex-grow: 1; }
+    .video-card__tag { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-primary); margin-bottom: 6px; }
+    .video-card__title { font-size: 0.92rem; font-weight: 600; color: var(--color-dark-blue); line-height: 1.4; margin-bottom: 10px; flex-grow: 1; }
+    .video-card__watch {
+      display: inline-flex; align-items: center; gap: 6px; font-size: 0.8rem; font-weight: 600;
+      color: var(--color-primary); transition: gap 0.3s ease; cursor: pointer;
+    }
+    .video-card:hover .video-card__watch { gap: 10px; }
+
+    /* Empty state */
+    .empty-state { text-align: center; padding: 4rem 2rem; color: var(--color-text-muted); }
+    .empty-state i { font-size: 3.5rem; opacity: 0.3; margin-bottom: 1rem; display: block; }
+    .empty-state p { font-size: 0.9rem; }
+
+    /* =============================================
+       FOOTER
+    ============================================= */
+    .footer {
+      background: linear-gradient(to bottom, #00132b, #000c1d);
+      color: var(--color-white);
+      padding: 4rem 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .footer::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--brand-gradient); opacity: 0.8; }
+    .footer-orb { position: absolute; border-radius: 50%; filter: blur(80px); z-index: 0; opacity: 0.12; pointer-events: none; }
+    .footer-orb--1 { width: 400px; height: 400px; background: var(--brand-deep); top: -100px; left: -100px; }
+    .footer-orb--2 { width: 300px; height: 300px; background: var(--brand-light); bottom: 100px; right: -50px; }
+    .footer .container { position: relative; z-index: 2; }
+
+    .footer__brand-text { font-size: 1.6rem; font-weight: 800; color: #fff; letter-spacing: 0.05em; background: #fff; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; transition: all 0.4s ease; cursor: pointer; }
+    .footer__brand-text:hover { background: var(--brand-gradient); -webkit-background-clip: text; background-clip: text; }
+    .footer__logo { height: 50px; width: 50px; object-fit: cover; border-radius: 50%; border: 2px solid rgba(41,171,226,0.3); box-shadow: 0 0 20px rgba(41,171,226,0.2); }
+    .footer__desc { font-size: 0.8rem; color: rgba(255,255,255,0.5); line-height: 1.8; margin-top: 1rem; max-width: 320px; }
+
+    .footer__heading { font-size: 0.9rem; font-weight: 800; color: var(--color-white); margin-bottom: 1.2rem; text-transform: uppercase; letter-spacing: 0.06em; background: #fff; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; transition: all 0.4s ease; cursor: default; }
+    .footer__heading:hover { background: var(--brand-gradient); -webkit-background-clip: text; background-clip: text; }
+
+    .footer__links { list-style: none; padding: 0; }
+    .footer__links li { margin-bottom: 0.8rem; }
+    .footer__links a { font-size: 0.8rem; color: rgba(255,255,255,0.6); transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 10px; }
+    .footer__links a:hover { color: var(--brand-light); transform: translateX(8px); }
+    .footer__links a i { font-size: 0.7rem; opacity: 0.5; transition: transform 0.3s ease; }
+    .footer__links a:hover i { transform: scale(1.4); color: var(--brand-light); }
+
+    .footer__contact-item { display: flex; align-items: flex-start; gap: 12px; font-size: 0.8rem; color: rgba(255,255,255,0.6); margin-bottom: 0.8rem; transition: color 0.3s; }
+    .footer__contact-item:hover { color: var(--color-white); }
+    .footer__contact-item i { font-size: 1.1rem; color: var(--brand-light); background: rgba(47,185,255,0.1); width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid rgba(47,185,255,0.15); transition: all 0.3s ease; }
+    .footer__contact-item:hover i { background: var(--brand-gradient); color: #fff; transform: scale(1.1) rotate(-5deg); box-shadow: 0 4px 15px rgba(31,131,200,0.3); }
+    .footer__contact-item a { color: inherit; transition: color 0.3s; }
+    .footer__contact-item a:hover { color: var(--brand-light); }
+
+    .footer__bottom { padding: 1.5rem 0; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 2.5rem; }
+    .footer__social { display: flex; gap: 12px; }
+    .footer__social a { width: 44px; height: 44px; background: var(--brand-deep); border: none; border-radius: 14px; display: flex; align-items: center; justify-content: center; color: var(--color-white); font-size: 1rem; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+    .footer__social a:hover { background: var(--brand-gradient); color: #fff; transform: translateY(-5px) rotate(8deg); box-shadow: 0 10px 25px rgba(31,131,200,0.4); }
+    .footer__copyright { font-size: 0.75rem; color: rgba(255,255,255,0.3); }
+    [dir="rtl"] .footer__links a:hover { transform: translateX(-5px); }
+
+    /* =============================================
+       MOBILE RESPONSIVE — DASHBOARD
+    ============================================= */
+
+    /* Tablet (≤ 991px) */
+    @media (max-width: 991.98px) {
+      /* Footer */
+      .footer { text-align: center !important; }
+      .footer .d-flex { justify-content: center !important; align-items: center !important; }
+      .footer__desc { margin: 1.5rem auto !important; text-align: center !important; }
+      .footer__social { justify-content: center !important; }
+      .footer__contact-item { flex-direction: column !important; align-items: center !important; text-align: center !important; gap: 8px !important; margin-bottom: 2rem !important; }
+      .footer__heading { text-align: center !important; margin-top: 2rem !important; margin-bottom: 1.5rem !important; }
+      .footer__links { text-align: center !important; }
+      .footer__links a { justify-content: center !important; }
+
+      /* Portal hero */
+      .portal-hero { padding: 2.5rem 0 2rem; }
+      .portal-hero__content { text-align: center; }
+      .col-lg-4.text-lg-end { text-align: center !important; margin-top: 1.5rem; }
+
+      /* Portal section */
+      .portal-section { padding: 2.5rem 0; }
+      .portal-section-title { font-size: 1.2rem; }
+
+      /* PDF cards: full width */
+      .col-lg-6 .pdf-card { padding: 1rem; }
+    }
+
+    /* Phone (≤ 575px) */
+    @media (max-width: 575px) {
+      /* Hero */
+      .portal-hero { padding: 2rem 0 1.5rem; }
+      .portal-hero h1 { font-size: 1.5rem !important; }
+      .portal-hero p  { font-size: 0.85rem; }
+      .portal-hero__tag { font-size: 0.7rem; padding: 5px 14px; }
+      .portal-hero__logout { font-size: 0.8rem; padding: 7px 16px; }
+
+      /* PDF card: compact on phone */
+      .pdf-card { flex-wrap: wrap; gap: 0.75rem; }
+      .pdf-card__icon { width: 44px; height: 44px; font-size: 1.4rem; }
+      .pdf-card__name { font-size: 0.82rem; }
+      .pdf-card__actions { margin-left: 0; flex-direction: row; gap: 6px; }
+      .pdf-btn { width: 34px; height: 34px; font-size: 0.85rem; }
+
+      /* Video card: reduce padding */
+      .video-card__body { padding: 1rem; }
+      .video-card__title { font-size: 0.9rem; }
+
+      /* Section title */
+      .portal-section-title { font-size: 1.1rem; gap: 0.5rem; }
+      .portal-section-title i { font-size: 1.2rem; }
+
+      /* Section padding */
+      .portal-section { padding: 1.5rem 0; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================ NAVBAR ============================================================ -->
+  <nav class="navbar navbar-expand-lg sticky-top" id="mainNavbar">
+    <div class="container navbar__container">
+
+      <a class="navbar__brand navbar-brand" href="index.html">
+        <img src="assets/images/logo.png" alt="Avantic Pharma Logo" class="navbar__logo" />
+        <span class="navbar__brand-text" data-en="AVANTIC" data-ar="أفانتيك">AVANTIC</span>
+      </a>
+
+      <div class="navbar__actions d-flex align-items-center">
+        <a href="login.html" class="nav-btn-register me-2">
+          <i class="bi bi-person-fill"></i>
+          <span data-en="LOGIN" data-ar="دخول">LOGIN</span>
+        </a>
+        <div class="lang-dropdown">
+          <button class="lang-toggle" id="langToggleBtn" aria-label="Select Language">
+            <i class="bi bi-globe"></i>
+          </button>
+          <div class="lang-menu" id="langMenu">
+            <button onclick="changeLang('en')"><span>English</span></button>
+            <button onclick="changeLang('ar')"><span>العربية</span></button>
+            <button onclick="changeLang('fr')"><span>Français</span></button>
+          </div>
+        </div>
+      </div>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar__bar"></span>
+        <span class="navbar__bar"></span>
+        <span class="navbar__bar"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav mx-auto gap-1">
+          <li class="nav-item"><a class="nav-link" href="index.html" data-en="Home" data-ar="الرئيسية">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="products.html" data-en="Products" data-ar="المنتجات">Products</a></li>
+
+          <!-- Services Mega Dropdown -->
+          <li class="nav-item mega-dropdown">
+            <a class="nav-link" href="services.html">
+              <span data-en="Services" data-ar="الخدمات">Services</span>
+              <i class="bi bi-chevron-down ms-1" style="font-size: 0.7rem;"></i>
+            </a>
+
+            <div class="mega-menu">
+               <div class="container">
+                  <div class="row g-4 align-items-center">
+                     <!-- Left: Preview -->
+                     <div class="col-lg-5 d-none d-lg-block">
+                        <div class="mega-menu__preview">
+                           <img src="assets/images/service-preview.jpg" alt="Service Preview">
+                           <div class="mega-menu__preview-content">
+                              <h4 data-en="Scientific Excellence" data-ar="تميز علمي">Scientific Excellence</h4>
+                              <p data-en="Unlocking health potential with innovative pharmaceutical services." data-ar="إطلاق إمكانات الصحة من خلال خدمات صيدلانية مبتكرة.">Unlocking health potential with innovative pharmaceutical services.</p>
+                               <a href="services.html" class="mega-menu__cta-btn">
+                                 <span data-en="All Services" data-ar="جميع الخدمات">All Services</span>
+                                 <i class="bi bi-arrow-right"></i>
+                               </a>
+                           </div>
+                        </div>
+                     </div>
+                     <!-- Right: Links -->
+                     <div class="col-lg-7">
+                        <div class="mega-menu__links">
+                           <div class="row g-4 align-items-center">
+                              <div class="col-md-6">
+                                 <ul class="mega-menu__list">
+                                    <li><a href="services.html"><i class="bi bi-chevron-right small"></i> <span data-en="Laboratory Research" data-ar="أبحاث المختبرات">Laboratory Research</span></a></li>
+                                    <li><a href="services.html"><i class="bi bi-chevron-right small"></i> <span data-en="Clinical Testing" data-ar="الاختبارات السريرية">Clinical Testing</span></a></li>
+                                    <li><a href="services.html"><i class="bi bi-chevron-right small"></i> <span data-en="Standard Optimization" data-ar="تحسين المعايير">Standard Optimization</span></a></li>
+                                    <li><a href="services.html"><i class="bi bi-chevron-right small"></i> <span data-en="Pharma Logistics" data-ar="الخدمات اللوجستية للأدوية">Pharma Logistics</span></a></li>
+                                 </ul>
+                              </div>
+                              <div class="col-md-6">
+                                 <ul class="mega-menu__list">
+                                    <li><a href="services.html"><i class="bi bi-chevron-right small"></i> <span data-en="GMPC Compliance" data-ar="امتثال GMPC">GMPC Compliance</span></a></li>
+                                    <li><a href="services.html"><i class="bi bi-chevron-right small"></i> <span data-en="Global Distribution" data-ar="التوزيع العالمي">Global Distribution</span></a></li>
+                                    <li><a href="services.html"><i class="bi bi-chevron-right small"></i> <span data-en="Retail Partnership" data-ar="شراكة التجزئة">Retail Partnership</span></a></li>
+                                    <li><a href="services.html"><i class="bi bi-chevron-right small"></i> <span data-en="Innovation Center" data-ar="مركز الابتكار">Innovation Center</span></a></li>
+                                 </ul>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+          </li>
+
+          <li class="nav-item"><a class="nav-link" href="partners.html" data-en="Partners" data-ar="شركاؤنا">Partners</a></li>
+          <li class="nav-item"><a class="nav-link" href="investors.html" data-en="Investors" data-ar="المستثمرون">Investors</a></li>
+          <li class="nav-item"><a class="nav-link" href="news.html" data-en="News" data-ar="الأخبار">News</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html" data-en="About Us" data-ar="من نحن">About Us</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html" data-en="Contact Us" data-ar="تواصل معنا">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="nav-progress" id="scrollProgress"></div>
+    </div>
+  </nav>
+
+  <!-- ============================================================ WELCOME BANNER ============================================================ -->
+  <header class="portal-hero">
+    <div class="container">
+      <div class="row align-items-center portal-hero__content">
+        <div class="col-lg-8">
+          <div class="portal-hero__tag"><i class="bi bi-person-check-fill"></i> <span data-en="Client Portal" data-ar="بوابة العميل">Client Portal</span></div>
+          <h1 data-en="Welcome back, Client Name" data-ar="مرحباً بعودتك، اسم العميل">Welcome back, Client Name</h1>
+          <p data-en="Access your exclusive documents and training materials below." data-ar="يمكنك الوصول إلى مستنداتك الحصرية ومواد التدريب أدناه.">Access your exclusive documents and training materials below.</p>
+        </div>
+        <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+          <a href="login.html" class="portal-hero__logout">
+            <i class="bi bi-box-arrow-right"></i>
+            <span data-en="Sign Out" data-ar="تسجيل الخروج">Sign Out</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================================ PORTAL CONTENT ============================================================ -->
+  <section class="portal-section">
+    <div class="container">
+
+      <!-- PDF Documents -->
+      <div class="mb-5 reveal">
+        <h2 class="portal-section-title">
+          <i class="bi bi-file-earmark-pdf-fill text-danger"></i>
+          <span data-en="My Documents" data-ar="مستنداتي">My Documents</span>
+        </h2>
+        <div class="row g-3">
+
+          <div class="col-lg-6">
+            <div class="pdf-card">
+              <div class="pdf-card__icon"><i class="bi bi-file-earmark-pdf-fill"></i></div>
+              <div class="pdf-card__info">
+                <div class="pdf-card__name" data-en="Product Catalog 2025.pdf" data-ar="كتالوج المنتجات 2025.pdf">Product Catalog 2025.pdf</div>
+                <div class="pdf-card__meta">
+                  <span><i class="bi bi-calendar3"></i> Jan 15, 2025</span>
+                  <span><i class="bi bi-file-earmark"></i> 4.2 MB</span>
+                </div>
+              </div>
+              <div class="pdf-card__actions">
+                <button class="pdf-btn pdf-btn--view" title="View"><i class="bi bi-eye"></i></button>
+                <button class="pdf-btn pdf-btn--download" title="Download"><i class="bi bi-download"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="pdf-card">
+              <div class="pdf-card__icon"><i class="bi bi-file-earmark-pdf-fill"></i></div>
+              <div class="pdf-card__info">
+                <div class="pdf-card__name" data-en="Quality Compliance Report.pdf" data-ar="تقرير الامتثال للجودة.pdf">Quality Compliance Report.pdf</div>
+                <div class="pdf-card__meta">
+                  <span><i class="bi bi-calendar3"></i> Feb 08, 2025</span>
+                  <span><i class="bi bi-file-earmark"></i> 2.8 MB</span>
+                </div>
+              </div>
+              <div class="pdf-card__actions">
+                <button class="pdf-btn pdf-btn--view" title="View"><i class="bi bi-eye"></i></button>
+                <button class="pdf-btn pdf-btn--download" title="Download"><i class="bi bi-download"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="pdf-card">
+              <div class="pdf-card__icon"><i class="bi bi-file-earmark-pdf-fill"></i></div>
+              <div class="pdf-card__info">
+                <div class="pdf-card__name" data-en="Distribution Agreement 2025.pdf" data-ar="اتفاقية التوزيع 2025.pdf">Distribution Agreement 2025.pdf</div>
+                <div class="pdf-card__meta">
+                  <span><i class="bi bi-calendar3"></i> Mar 01, 2025</span>
+                  <span><i class="bi bi-file-earmark"></i> 1.5 MB</span>
+                </div>
+              </div>
+              <div class="pdf-card__actions">
+                <button class="pdf-btn pdf-btn--view" title="View"><i class="bi bi-eye"></i></button>
+                <button class="pdf-btn pdf-btn--download" title="Download"><i class="bi bi-download"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="pdf-card">
+              <div class="pdf-card__icon"><i class="bi bi-file-earmark-pdf-fill"></i></div>
+              <div class="pdf-card__info">
+                <div class="pdf-card__name" data-en="Technical Specifications Sheet.pdf" data-ar="ورقة المواصفات التقنية.pdf">Technical Specifications Sheet.pdf</div>
+                <div class="pdf-card__meta">
+                  <span><i class="bi bi-calendar3"></i> Mar 20, 2025</span>
+                  <span><i class="bi bi-file-earmark"></i> 3.1 MB</span>
+                </div>
+              </div>
+              <div class="pdf-card__actions">
+                <button class="pdf-btn pdf-btn--view" title="View"><i class="bi bi-eye"></i></button>
+                <button class="pdf-btn pdf-btn--download" title="Download"><i class="bi bi-download"></i></button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Training Videos -->
+      <div class="reveal">
+        <h2 class="portal-section-title">
+          <i class="bi bi-play-circle-fill" style="color: var(--brand-mid);"></i>
+          <span data-en="Training Videos" data-ar="فيديوهات تعليمية">Training Videos</span>
+        </h2>
+        <div class="row g-4">
+
+          <div class="col-lg-4 col-md-6">
+            <div class="video-card">
+              <div class="video-card__thumb">
+                <img src="assets/images/service-preview.jpg" alt="Video 1" />
+                <div class="video-card__play">
+                  <div class="video-card__play-btn"><i class="bi bi-play-fill"></i></div>
+                </div>
+                <span class="video-card__duration">12:45</span>
+              </div>
+              <div class="video-card__body">
+                <div class="video-card__tag" data-en="Product Training" data-ar="تدريب المنتج">Product Training</div>
+                <div class="video-card__title" data-en="Introduction to Avantic Product Line & Usage Guidelines" data-ar="مقدمة في خط منتجات أفانتيك وإرشادات الاستخدام">Introduction to Avantic Product Line & Usage Guidelines</div>
+                <div class="video-card__watch"><i class="bi bi-play-circle"></i> <span data-en="Watch Now" data-ar="شاهد الآن">Watch Now</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6">
+            <div class="video-card">
+              <div class="video-card__thumb">
+                <img src="assets/images/about-lab.png" alt="Video 2" />
+                <div class="video-card__play">
+                  <div class="video-card__play-btn"><i class="bi bi-play-fill"></i></div>
+                </div>
+                <span class="video-card__duration">08:30</span>
+              </div>
+              <div class="video-card__body">
+                <div class="video-card__tag" data-en="Quality & Compliance" data-ar="الجودة والامتثال">Quality & Compliance</div>
+                <div class="video-card__title" data-en="GMP Standards & Quality Control Procedures Walkthrough" data-ar="معايير GMP وإجراءات مراقبة الجودة">GMP Standards & Quality Control Procedures Walkthrough</div>
+                <div class="video-card__watch"><i class="bi bi-play-circle"></i> <span data-en="Watch Now" data-ar="شاهد الآن">Watch Now</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6">
+            <div class="video-card">
+              <div class="video-card__thumb">
+                <img src="assets/images/main-news.jpg" alt="Video 3" />
+                <div class="video-card__play">
+                  <div class="video-card__play-btn"><i class="bi bi-play-fill"></i></div>
+                </div>
+                <span class="video-card__duration">15:20</span>
+              </div>
+              <div class="video-card__body">
+                <div class="video-card__tag" data-en="Distribution" data-ar="التوزيع">Distribution</div>
+                <div class="video-card__title" data-en="Supply Chain & Distribution Network Best Practices" data-ar="أفضل ممارسات سلسلة التوريد وشبكة التوزيع">Supply Chain & Distribution Network Best Practices</div>
+                <div class="video-card__watch"><i class="bi bi-play-circle"></i> <span data-en="Watch Now" data-ar="شاهد الآن">Watch Now</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6">
+            <div class="video-card">
+              <div class="video-card__thumb">
+                <img src="assets/images/news1.jpg" alt="Video 4" />
+                <div class="video-card__play">
+                  <div class="video-card__play-btn"><i class="bi bi-play-fill"></i></div>
+                </div>
+                <span class="video-card__duration">10:05</span>
+              </div>
+              <div class="video-card__body">
+                <div class="video-card__tag" data-en="Safety & Storage" data-ar="السلامة والتخزين">Safety & Storage</div>
+                <div class="video-card__title" data-en="Pharmaceutical Storage & Cold Chain Management" data-ar="تخزين الأدوية وإدارة سلسلة التبريد">Pharmaceutical Storage & Cold Chain Management</div>
+                <div class="video-card__watch"><i class="bi bi-play-circle"></i> <span data-en="Watch Now" data-ar="شاهد الآن">Watch Now</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6">
+            <div class="video-card">
+              <div class="video-card__thumb">
+                <img src="assets/images/news2.jpg" alt="Video 5" />
+                <div class="video-card__play">
+                  <div class="video-card__play-btn"><i class="bi bi-play-fill"></i></div>
+                </div>
+                <span class="video-card__duration">06:55</span>
+              </div>
+              <div class="video-card__body">
+                <div class="video-card__tag" data-en="Regulatory" data-ar="تنظيمي">Regulatory</div>
+                <div class="video-card__title" data-en="Regulatory Affairs & Market Authorization Process" data-ar="الشؤون التنظيمية وعملية تصاريح التسويق">Regulatory Affairs & Market Authorization Process</div>
+                <div class="video-card__watch"><i class="bi bi-play-circle"></i> <span data-en="Watch Now" data-ar="شاهد الآن">Watch Now</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6">
+            <div class="video-card">
+              <div class="video-card__thumb">
+                <img src="assets/images/news3.jpg" alt="Video 6" />
+                <div class="video-card__play">
+                  <div class="video-card__play-btn"><i class="bi bi-play-fill"></i></div>
+                </div>
+                <span class="video-card__duration">18:10</span>
+              </div>
+              <div class="video-card__body">
+                <div class="video-card__tag" data-en="Partnership" data-ar="الشراكة">Partnership</div>
+                <div class="video-card__title" data-en="Partnership Program Overview & Benefits Guide" data-ar="نظرة عامة على برنامج الشراكة ودليل المزايا">Partnership Program Overview & Benefits Guide</div>
+                <div class="video-card__watch"><i class="bi bi-play-circle"></i> <span data-en="Watch Now" data-ar="شاهد الآن">Watch Now</span></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================ FOOTER ============================================================ -->
+  <footer class="footer">
+    <!-- Decorative Orbs -->
+    <div class="footer-orb footer-orb--1"></div>
+    <div class="footer-orb footer-orb--2"></div>
+
+    <div class="container">
+      <div class="row g-5">
+        <div class="col-md-6 col-lg-3">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <img src="assets/images/logo.png" alt="Avantic Logo" class="footer__logo" />
+            <span class="footer__brand-text" data-en="AVANTIC" data-ar="أفانتيك">AVANTIC</span>
+          </div>
+          <p class="footer__desc" data-en="Advancing human health through innovative pharmaceutical solutions. Science Forward, Healthier World." data-ar="تطوير صحة الإنسان من خلال حلول دوائية مبتكرة. العلم للأمام، عالم أكثر صحة.">Advancing human health through innovative pharmaceutical solutions. Science Forward, Healthier World.</p>
+
+          <div class="footer__social mt-4">
+            <a href="#" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+            <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+            <a href="#" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>
+            <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-2">
+          <h4 class="footer__heading" data-en="Quick Links" data-ar="روابط سريعة">Quick Links</h4>
+          <ul class="footer__links">
+            <li><a href="index.html"><i class="bi bi-chevron-right"></i><span data-en="Home" data-ar="الرئيسية">Home</span></a></li>
+            <li><a href="products.html"><i class="bi bi-chevron-right"></i><span data-en="Products" data-ar="المنتجات">Products</span></a></li>
+            <li><a href="news.html"><i class="bi bi-chevron-right"></i><span data-en="News" data-ar="الأخبار">News</span></a></li>
+            <li><a href="about.html"><i class="bi bi-chevron-right"></i><span data-en="About Us" data-ar="عن الشركة">About Us</span></a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+          <h4 class="footer__heading" data-en="Contact Info" data-ar="معلومات التواصل">Contact Info</h4>
+          <div class="footer__contact-item">
+            <i class="bi bi-envelope-fill"></i>
+            <a href="mailto:info@avanticpharma.com">info@avanticpharma.com</a>
+          </div>
+          <div class="footer__contact-item">
+            <i class="bi bi-telephone-fill"></i>
+            <span dir="ltr">+20 10 90080600</span>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <h4 class="footer__heading" data-en="Address & Hours" data-ar="العنوان والمواعيد">Address & Hours</h4>
+          <div class="footer__contact-item">
+            <i class="bi bi-geo-alt-fill"></i>
+            <span data-en="AVANTIC Pharmaceuticals, Cairo, Egypt" data-ar="أفانتيك فارما للأدوية، القاهرة، مصر">AVANTIC Pharmaceuticals, Cairo, Egypt</span>
+          </div>
+          <div class="footer__contact-item">
+            <i class="bi bi-clock-fill"></i>
+            <div class="d-flex flex-column">
+                <span data-en="Mon - Fri: 08:30 AM - 05:30 PM" data-ar="الاثنين - الجمعة: 08:30 ص - 05:30 م">Mon - Fri: 08:30 AM - 05:30 PM</span>
+                <span data-en="Sat - Sun: Closed" data-ar="السبت - الأحد: مغلق">Sat - Sun: Closed</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer__bottom d-flex flex-column flex-md-row align-items-center justify-content-center gap-3 mt-4">
+        <p class="footer__copyright mb-0">
+          <span data-en="© 2025 Avantic Pharma. All rights reserved." data-ar="© 2025 أفانتيك فارما. جميع الحقوق محفوظة.">© 2025 Avantic Pharma. All rights reserved.</span>
+          &nbsp;|&nbsp;
+          <a href="#" style="color: rgba(255,255,255,0.4); font-size: 0.8rem;" data-en="Privacy Policy" data-ar="سياسة الخصوصية">Privacy Policy</a>
+          &nbsp;|&nbsp;
+          <a href="#" style="color: rgba(255,255,255,0.4); font-size: 0.8rem;" data-en="Terms of Use" data-ar="شروط الاستخدام">Terms of Use</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+  (function () {
+    const changeLang = (lang) => {
+      const html = document.documentElement;
+      const isRTL = lang === 'ar';
+      html.setAttribute('dir', isRTL ? 'rtl' : 'ltr');
+      html.setAttribute('lang', lang);
+      if (isRTL) document.body.classList.add('rtl');
+      else document.body.classList.remove('rtl');
+      localStorage.setItem('lang', lang);
+      document.querySelectorAll('[data-en]').forEach(el => {
+        if (lang === 'ar') el.textContent = el.getAttribute('data-ar');
+        else el.textContent = el.getAttribute('data-en');
+      });
+      document.getElementById('langMenu').classList.remove('show');
+    };
+    window.changeLang = changeLang;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedLang = localStorage.getItem('lang') || 'en';
+      if (savedLang === 'ar') {
+        document.documentElement.setAttribute('lang', 'ar');
+        document.documentElement.setAttribute('dir', 'rtl');
+        document.body.classList.add('rtl');
+        document.querySelectorAll('[data-en]').forEach(el => { el.textContent = el.getAttribute('data-ar'); });
+      }
+
+      const langBtn = document.getElementById('langToggleBtn');
+      const langMenu = document.getElementById('langMenu');
+      if (langBtn) langBtn.addEventListener('click', (e) => { e.stopPropagation(); langMenu.classList.toggle('show'); });
+      window.addEventListener('click', () => { if (langMenu) langMenu.classList.remove('show'); });
+
+      // Scroll effects
+      const navbar = document.getElementById('mainNavbar');
+      const progress = document.getElementById('scrollProgress');
+      window.addEventListener('scroll', () => {
+        navbar.classList.toggle('scrolled', window.scrollY > 30);
+        if (progress) {
+          const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+          progress.style.width = (window.scrollY / h * 100) + '%';
+        }
+      }, { passive: true });
+
+      // Reveal
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+      }, { threshold: 0.12 });
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    });
+  })();
+  </script>
+</body>
+</html>

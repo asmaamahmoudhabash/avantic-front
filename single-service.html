@@ -1,0 +1,1751 @@
+<!DOCTYPE html>
+<html lang="en"
+      data-title-en="Research & Development — Avantic Pharma"
+      data-title-ar="البحث والتطوير — أفانتيك فارما">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-en="Research & Development — Avantic Pharma" data-ar="البحث والتطوير — أفانتيك فارما">Research &
+    Development — Avantic Pharma</title>
+
+  <!-- Bootstrap 5 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Cairo:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+
+  <style>
+    /* =============================================
+       CSS CUSTOM PROPERTIES — BRAND TOKENS
+    ============================================= */
+    :root {
+      --color-primary: #29ABE2;
+      --color-dark-blue: rgb(0, 24, 60);
+      /* Brand Identity Colors */
+      --brand-deep: #105791;
+      --brand-mid: #1f83c8;
+      --brand-light: #2FB9FF;
+      --brand-gradient: linear-gradient(135deg, var(--brand-deep) 0%, var(--brand-mid) 50%, var(--brand-light) 100%);
+
+      --color-medium-blue: #2196C4;
+      --color-light-accent: #33CCFF;
+      --color-bg: #f0f8ff;
+      --color-white: #ffffff;
+      --color-text-dark: rgb(0, 24, 60);
+      --color-text-body: rgb(0, 24, 60);
+      --color-text-muted: #6c8098;
+
+      --font-en: 'Poppins', sans-serif;
+      --font-ar: 'Cairo', sans-serif;
+
+      --shadow-sm: 0 4px 15px rgba(31, 78, 140, 0.06);
+      --shadow-md: 0 10px 40px rgba(31, 78, 140, 0.12);
+      --shadow-lg: 0 20px 60px rgba(31, 78, 140, 0.18);
+
+      --transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-en);
+      color: var(--color-text-dark);
+      background: var(--color-bg);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    body.rtl {
+      font-family: var(--font-ar);
+      direction: rtl;
+      text-align: right;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    a {
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* =============================================
+       ENGLISH BALANCING RULES
+    ============================================= */
+    html[lang="en"] {
+        font-family: 'Poppins', sans-serif;
+    }
+    html[lang="en"] h1, html[lang="en"] h2, html[lang="en"] h3, html[lang="en"] .navbar-brand {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 500;
+    }
+    html[lang="en"] .page-hero h1 {
+        font-size: clamp(2rem, 5vw, 3rem);
+        font-weight: 600 !important;
+    }
+    html[lang="en"] .service-content h2 { font-size: 1.7rem; font-weight: 500; }
+    html[lang="en"] p, html[lang="en"] li { font-size: 0.92rem; font-weight: 400; }
+    html[lang="en"] .nav-link, html[lang="en"] .btn { font-size: 12.5px; font-weight: 500; }
+
+    /* =============================================
+       NAVBAR
+    ============================================= */
+    @keyframes slideDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to   { transform: translateY(0);     opacity: 1; }
+    }
+    @keyframes navFadeIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideUnderlineLTR {
+      from { transform: scaleX(0); }
+      to   { transform: scaleX(1); }
+    }
+
+    .navbar {
+      background: var(--color-white);
+      min-height: 75px;
+      padding: 25px 0;
+      border-bottom: 1px solid rgba(41,171,226,0.1);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1050;
+      overflow: visible;
+      animation: slideDown 0.6s ease-out forwards;
+    }
+    .navbar.scrolled {
+      background: rgba(255, 255, 255, 0.8) !important;
+      backdrop-filter: blur(12px) saturate(180%);
+      min-height: 65px;
+      box-shadow: 0 4px 30px rgba(31,78,140,0.08);
+      border-bottom: 1px solid rgba(41,171,226,0.15);
+    }
+
+    /* Progress bar at bottom of header */
+    .nav-progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      background: linear-gradient(to right, var(--color-primary), var(--color-light-accent));
+      width: 0%;
+      transition: width 0.1s linear;
+      z-index: 100;
+    }
+
+    /* Container acts as the flex row */
+    .navbar__container {
+      display: flex;
+      align-items: center;
+      min-height: 70px;
+      gap: 0;
+    }
+
+    /* ---- Brand ---- */
+    .navbar__brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      order: 1;
+      flex-shrink: 0;
+      padding: 0;
+      transition: transform 0.3s ease;
+    }
+    .navbar__brand:hover { transform: scale(1.02); }
+    .navbar__logo {
+      height: 70px;
+      width: 70px;
+      object-fit: cover;
+      border-radius: 50%;
+      transition: filter 0.3s ease;
+    }
+    .navbar__brand:hover .navbar__logo {
+      filter: drop-shadow(0 0 8px rgba(41,171,226,0.4));
+    }
+    .navbar__brand-text {
+      font-size: 1.85rem;
+      font-weight: 500;
+      color: var(--color-dark-blue);
+      letter-spacing: 0.08em;
+      background: var(--color-dark-blue);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      transition: all 0.4s ease;
+    }
+    .navbar__brand:hover .navbar__brand-text {
+      background: var(--brand-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+
+    /* ---- Collapse (centre slot) ---- */
+    #navMenu { order: 2; }
+
+    /* ---- Nav links ---- */
+    .navbar-nav .nav-item {
+      opacity: 0;
+      animation: navFadeIn 0.4s ease forwards;
+    }
+    .navbar-nav .nav-item:nth-child(1) { animation-delay: 0.10s; }
+    .navbar-nav .nav-item:nth-child(2) { animation-delay: 0.18s; }
+    .navbar-nav .nav-item:nth-child(3) { animation-delay: 0.26s; }
+    .navbar-nav .nav-item:nth-child(4) { animation-delay: 0.34s; }
+    .navbar-nav .nav-item:nth-child(5) { animation-delay: 0.42s; }
+    .navbar-nav .nav-item:nth-child(6) { animation-delay: 0.50s; }
+    .navbar-nav .nav-item:nth-child(7) { animation-delay: 0.58s; }
+    .navbar-nav .nav-item:nth-child(8) { animation-delay: 0.66s; }
+
+    .navbar-nav .nav-link {
+      font-size: 14.5px;
+      font-weight: 500;
+      color: var(--color-text-dark);
+      padding: 8px 14px !important;
+      border-radius: 50px;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      white-space: nowrap;
+      margin: 0 2px;
+      border: 1px solid transparent;
+    }
+    .navbar-nav .nav-link:hover {
+      color: var(--color-primary);
+      background: rgba(41,171,226,0.08);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(41,171,226,0.12);
+      border-color: rgba(41,171,226,0.15);
+    }
+    
+    .navbar-nav .nav-link.active {
+      color: var(--color-white) !important;
+      background: var(--brand-gradient);
+      box-shadow: 0 10px 25px rgba(31, 131, 200, 0.3);
+      border-color: transparent;
+    }
+    /* Simple hover refinement for active item */
+    .navbar-nav .nav-link.active:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 30px rgba(41,171,226,0.45);
+    }
+    
+    /* ---- Mega Menu — Desktop (RE-STORED) ---- */
+    @media (min-width: 992px) {
+      .navbar, .navbar__container, .navbar-collapse, .navbar-nav { overflow: visible !important; }
+      .mega-dropdown { position: relative !important; }
+      
+      .mega-menu {
+        position: absolute !important;
+        top: 100% !important;
+        left: -150px !important;
+        width: 850px !important;
+        max-width: 90vw !important;
+        transform: none !important;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(20px);
+        border-radius: 32px;
+        box-shadow: 0 40px 100px rgba(0, 24, 60, 0.15), 0 10px 40px rgba(41, 171, 226, 0.1);
+        padding: 1.5rem 2rem;
+        display: none;
+        z-index: 100000;
+        border: 1px solid rgba(41, 171, 226, 0.15);
+        border-top: 4px solid var(--color-primary);
+        animation: megaSlideInFadeFixed 0.3s ease forwards;
+        margin-top: 10px;
+      }
+      /* Transparent bridge to prevent hover loss */
+      .mega-dropdown::after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        height: 20px;
+        z-index: 10;
+      }
+      
+      .mega-menu::before {
+        content: '';
+        position: absolute;
+        top: -12px;
+        left: 170px;
+        margin-left: 0;
+        border-left: 12px solid transparent;
+        border-right: 12px solid transparent;
+        border-bottom: 12px solid var(--color-primary);
+      }
+      [dir="rtl"] .mega-menu::before { left: auto; right: 170px; }
+      
+      .mega-dropdown:hover .mega-menu { display: block; }
+
+      @keyframes megaSlideInFadeFixed {
+        from { opacity: 0; transform: translateY(10px) scale(0.98); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
+      }
+
+      /* Preview Card */
+      .mega-menu__preview {
+        position: relative; 
+        border-radius: 20px; 
+        overflow: hidden; 
+        height: 100%; 
+        min-height: 300px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+      .mega-menu__preview img { 
+          width: 100%; height: 100%; object-fit: cover; 
+          transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1); 
+      }
+      .mega-menu__preview:hover img { transform: scale(1.05); }
+      .mega-menu__preview-content {
+        position: absolute; bottom: 0; left: 0; right: 0; padding: 30px 25px;
+        background: linear-gradient(to top, rgba(0, 24, 60, 0.95) 0%, rgba(0, 24, 60, 0.7) 40%, transparent 100%);
+        color: #fff;
+        transition: padding-bottom 0.4s ease;
+      }
+      .mega-menu__preview:hover .mega-menu__preview-content { padding-bottom: 50px; }
+      .mega-menu__preview-content h4 { font-size: 1.5rem; font-weight: 600; margin-bottom: 10px; color: #fff;}
+      .mega-menu__preview-content p { font-size: 0.85rem; opacity: 0.9; margin: 0; line-height: 1.4;}
+      
+      .mega-menu__cta-btn {
+        display: inline-flex; align-items: center; gap: 8px;
+        margin-top: 18px; padding: 10px 24px;
+        background: var(--brand-gradient); color: #fff !important;
+        border-radius: 50px; font-size: 0.82rem; font-weight: 600;
+        text-decoration: none; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 0 4px 15px rgba(31, 131, 200, 0.3);
+      }
+      .mega-menu__cta-btn:hover {
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 10px 25px rgba(31, 131, 200, 0.45);
+      }
+      .mega-menu__cta-btn i { font-size: 0.9rem; transition: transform 0.3s; }
+      .mega-menu__cta-btn:hover i { transform: translateX(4px); }
+      [dir="rtl"] .mega-menu__cta-btn:hover i { transform: translateX(-4px); }
+      
+      /* Links Section */
+      .mega-menu__title {
+        font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+        color: var(--color-primary); letter-spacing: 0.12em; margin-bottom: 1.5rem;
+        display: inline-block; padding: 8px 18px; 
+        background: linear-gradient(135deg, rgba(41,171,226,0.1) 0%, rgba(41,171,226,0.03) 100%);
+        border-radius: 50px; border: 1px solid rgba(41,171,226,0.1);
+      }
+      .mega-menu__list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 14px; }
+      .mega-menu__list a {
+        display: flex; align-items: center; gap: 10px; font-size: 0.92rem;
+        color: var(--color-dark-blue); font-weight: 500; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        padding: 10px 14px; border-radius: 12px; background: transparent;
+        white-space: nowrap;
+      }
+      .mega-menu__list a i { 
+          color: var(--color-primary); font-size: 1rem; transition: all 0.3s ease;
+          width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;
+          background: rgba(41,171,226,0.08); border-radius: 8px; flex-shrink: 0;
+      }
+      .mega-menu__list a:hover { 
+          color: var(--color-primary); 
+          background: #f4fbff; 
+          transform: translateX(8px);
+          box-shadow: 0 4px 15px rgba(41, 171, 226, 0.08);
+      }
+      .mega-menu__list a:hover i {
+          background: var(--color-primary);
+          color: #fff;
+          transform: scale(1.1);
+      }
+      [dir="rtl"] .mega-menu__list a:hover { transform: translateX(-8px); }
+    }
+
+    /* ---- Mega Menu — Mobile ---- */
+    @media (max-width: 991px) {
+      .mega-menu-wrapper { display: none; }
+      .mega-menu { display: none; padding: 8px 0; }
+      .mega-dropdown.open .mega-menu { display: block; }
+      .mega-menu__inner { flex-direction: column; }
+      .mega-menu__sidebar { display: none; }
+      .mega-menu__content { padding: 0; }
+      .mega-menu__section-label { font-size: 0.8rem; color: var(--color-primary); margin: 12px 0 6px 16px; font-weight: 600; }
+      [dir="rtl"] .mega-menu__section-label { margin: 12px 16px 6px 0; }
+      .mega-menu__grid { grid-template-columns: 1fr; gap: 0; margin-bottom: 0; }
+      .mega-menu__item { padding: 10px 20px; border-radius: 0; border-left: 2px solid transparent; }
+      .mega-menu__item:hover { background: rgba(41,171,226,0.05); border-left-color: var(--color-primary); transform: none; }
+      [dir="rtl"] .mega-menu__item { border-left: none; border-right: 2px solid transparent; }
+      [dir="rtl"] .mega-menu__item:hover { border-right-color: var(--color-primary); }
+      .mega-menu__item-icon { display: none; }
+      .mega-menu__item-desc { display: none; }
+      .mega-menu__footer { display: none; }
+    }
+
+    /* ---- Header Actions ---- */
+    .navbar__actions {
+      order: 3;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-left: 1.25rem;
+      flex-shrink: 0;
+    }
+    .nav-btn-register {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #fff;
+      background: var(--brand-gradient);
+      padding: 6px 16px;
+      border-radius: 50px;
+      box-shadow: 0 4px 15px rgba(31, 131, 200, 0.3);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    .nav-btn-register:hover {
+      box-shadow: 0 6px 20px rgba(31, 78, 140, 0.4);
+      transform: translateY(-2px);
+      color: #fff;
+    }
+    @media (max-width: 450px) {
+      .nav-btn-register span { display: none; }
+      .nav-btn-register { padding: 8px 12px; }
+      .navbar__brand-text { display: none !important; }
+    }
+    
+    .lang-dropdown { position: relative; }
+    .lang-toggle {
+      width: 44px;
+      height: 44px;
+      border: 1px solid rgba(41,171,226,0.2);
+      border-radius: 50%;
+      background: rgba(255,255,255,0.8);
+      backdrop-filter: blur(8px);
+      color: var(--color-dark-blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .lang-toggle:hover {
+      background: var(--brand-gradient);
+      color: white;
+      border-color: transparent;
+      transform: rotate(15deg) scale(1.1);
+      box-shadow: 0 8px 20px rgba(31, 131, 200, 0.25);
+    }
+    .lang-menu {
+      position: absolute;
+      top: 130%;
+      right: 0;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 15px 45px rgba(0,0,0,0.1);
+      padding: 10px;
+      min-width: 150px;
+      display: none;
+      z-index: 1000;
+      border: 1px solid rgba(0,0,0,0.05);
+      animation: navFadeIn 0.3s ease;
+    }
+    .lang-menu.show { display: block; }
+    .lang-menu button {
+      width: 100%;
+      text-align: left;
+      padding: 10px 15px;
+      border: none;
+      background: none;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-dark-blue);
+      border-radius: 10px;
+      transition: all 0.25s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .lang-menu button:hover {
+      background: rgba(41,171,226,0.08);
+      color: var(--brand-mid);
+      padding-left: 20px;
+    }
+    [dir="rtl"] .lang-menu { right: auto; left: 0; }
+    [dir="rtl"] .lang-menu button { text-align: right; flex-direction: row-reverse; }
+    [dir="rtl"] .lang-menu button:hover { padding-left: 15px; padding-right: 20px; }
+    
+    /* ---- Custom hamburger ---- */
+    .navbar-toggler {
+      border: none !important;
+      box-shadow: none !important;
+      background: none;
+      padding: 8px;
+      order: 4;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+    }
+    .navbar__bar {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--color-primary);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    /* ---- Mobile close button ---- */
+    .navbar__mobile-close {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.3rem;
+      color: var(--color-dark-blue);
+      padding: 0.75rem 1.25rem;
+      width: 100%;
+      text-align: right;
+      transition: color 0.3s ease;
+      line-height: 1;
+    }
+    .navbar__mobile-close:hover { color: var(--color-primary); }
+
+    /* ---- RTL navbar order ---- */
+    [dir="rtl"] .navbar__brand     { order: 1; }
+    [dir="rtl"] #navMenu           { order: 2; }
+    [dir="rtl"] .navbar__actions { order: 3; margin-left: 0; margin-right: 1.25rem; }
+    /* RTL row only on desktop */
+    @media (min-width: 992px) {
+      [dir="rtl"] .navbar-nav { flex-direction: row !important; }
+    }
+
+    /* RTL underline from right */
+    [dir="rtl"] .navbar-nav .nav-link.active::after {
+      transform-origin: right center;
+    }
+    [dir="rtl"] .navbar__mobile-close { text-align: left; }
+
+    /* ---- Mobile (≤ lg) ---- */
+    @media (max-width: 991.98px) {
+      .navbar {
+        padding: 12px 0 !important;
+        min-height: 70px !important;
+      }
+      .navbar__logo {
+        height: 48px !important;
+        width: 48px !important;
+      }
+      .navbar__brand-text {
+        font-size: 1.35rem !important;
+      }
+
+      /* Force single row */
+      .navbar__container {
+          display: flex !important;
+          flex-direction: row !important;
+          flex-wrap: nowrap !important;
+          align-items: center !important;
+          justify-content: space-between !important;
+      }
+
+      .navbar__brand { order: 1 !important; margin: 0 !important; }
+      .navbar__actions {
+        order: 2 !important;
+        margin: 0 auto 0 0.75rem !important;
+        flex-shrink: 0 !important;
+      }
+      [dir="rtl"] .navbar__actions {
+        margin: 0 0.75rem 0 auto !important;
+      }
+      .navbar-toggler {
+        order: 3 !important;
+        margin: 0 !important;
+        padding: 6px !important;
+      }
+
+      /* Premium Dropdown Overlay */
+      .navbar-collapse {
+        position: absolute;
+        top: 100%;
+        left: 10px;
+        right: 10px;
+        background: #ffffff !important;
+        border-radius: 20px;
+        box-shadow: 0 15px 40px rgba(0, 24, 60, 0.18);
+        margin-top: 12px;
+        padding: 1.5rem 1rem !important;
+        border: 1px solid rgba(41, 171, 226, 0.12) !important;
+        z-index: 1100;
+        border-top: 2px solid var(--color-primary) !important;
+      }
+
+      .navbar-nav {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 8px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+
+      .navbar-nav .nav-link {
+        width: 100%;
+        text-align: center;
+        padding: 12px !important;
+        font-size: 1.05rem !important;
+        border-radius: 12px;
+      }
+
+      .navbar-nav .nav-link.active {
+        background: var(--brand-gradient);
+        color: #fff !important;
+      }
+
+      .navbar__mobile-close {
+        display: block !important;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: auto !important;
+        padding: 5px !important;
+      }
+      [dir="rtl"] .navbar__mobile-close {
+        left: 10px;
+        right: auto;
+      }
+    }
+
+    @media (max-width: 450px) {
+      .nav-btn-register span { display: none; }
+      .nav-btn-register { padding: 8px 12px; }
+      .navbar__brand-text { display: none !important; }
+      .navbar__actions { gap: 6px; }
+    }
+
+    /* =============================================
+       PAGE HERO
+    ============================================= */
+    .page-hero {
+      position: relative;
+      height: 550px;
+      background: linear-gradient(135deg, rgba(0, 24, 60, 0.6) 0%, rgba(31, 131, 200, 0.4) 100%), url('assets/images/services-hero-lab.png') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .page-hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 50px;
+      background: linear-gradient(to top, var(--color-bg), transparent);
+    }
+
+    .page-hero__content {
+      position: relative;
+      z-index: 5;
+      color: #fff;
+    }
+
+    .page-hero__breadcrumb {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .page-hero__breadcrumb a {
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .page-hero__breadcrumb a:hover { color: #5CE0FF; }
+    .page-hero__breadcrumb .sep {
+      color: rgba(255,255,255,0.35);
+      font-size: 0.85rem;
+    }
+    .page-hero__breadcrumb span {
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .page-hero h1 {
+      margin-bottom: 0;
+      transition: all 0.4s ease;
+      display: block;
+      cursor: default;
+      color: #ffffff;
+      text-shadow: none;
+      font-weight: 600 !important;
+    }
+
+    .page-hero h1:hover {
+      color: #5CE0FF;
+      text-shadow: 0 0 20px rgba(92, 224, 255, 0.7), 0 2px 8px rgba(0, 0, 0, 0.5);
+    }
+
+    /* =============================================
+       MAIN LAYOUT (SIDEBAR & CONTENT)
+    ============================================= */
+    .service-main {
+      padding: 5rem 0;
+    }
+
+    /* LEFT SIDEBAR */
+    .service-sidebar {
+      position: sticky;
+      top: 100px;
+    }
+
+    .service-menu {
+      background: #fff;
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid rgba(41, 171, 226, 0.1);
+      margin-bottom: 30px;
+    }
+
+    .service-menu h4 {
+      font-weight: 700;
+      margin-bottom: 20px;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: var(--color-dark-blue);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      transition: all 0.4s ease;
+      cursor: default;
+    }
+
+    .service-menu h4:hover {
+      background: var(--brand-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+
+    .service-menu ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .service-menu li {
+      margin-bottom: 10px;
+    }
+
+    .service-menu a {
+      display: block;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      background: #f8fafd;
+      border: 1px solid transparent;
+      transition: all 0.35s ease;
+      font-size: 0.95rem;
+    }
+
+    .service-menu a:hover,
+    .service-menu a.active {
+      background: var(--brand-gradient);
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 8px 22px rgba(31, 131, 200, 0.35);
+      transform: translateX(6px);
+    }
+
+    [dir="rtl"] .service-menu a:hover,
+    [dir="rtl"] .service-menu a.active {
+      transform: translateX(-6px);
+    }
+
+    .sidebar-contact {
+      background: linear-gradient(135deg, var(--color-dark-blue) 0%, var(--brand-deep) 100%);
+      border-radius: 16px;
+      padding: 35px 30px;
+      text-align: center;
+      color: #fff;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(41, 171, 226, 0.15);
+    }
+
+    .sidebar-contact::before {
+      content: '\F5CA';
+      font-family: "bootstrap-icons";
+      position: absolute;
+      font-size: 150px;
+      color: rgba(255, 255, 255, 0.03);
+      top: -20px;
+      left: -20px;
+    }
+
+    .sidebar-contact h4 {
+      font-weight: 700;
+      margin-bottom: 15px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .sidebar-contact p {
+      font-size: 0.9rem;
+      opacity: 0.8;
+      margin-bottom: 25px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .sidebar-contact .btn {
+      background: #fff;
+      color: var(--color-dark-blue);
+      font-weight: 700;
+      border-radius: 50px;
+      padding: 12px 24px;
+      position: relative;
+      z-index: 2;
+      transition: var(--transition);
+      border: none;
+    }
+
+    .sidebar-contact .btn:hover {
+      background: var(--color-primary);
+      color: #fff;
+      box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+    }
+
+    /* SERVICE IMAGE SLIDER */
+    .svc-slider {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 3rem;
+      align-items: stretch;
+      justify-content: center;
+      max-width: 950px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    [dir="rtl"] .svc-slider { flex-direction: row-reverse; }
+
+    .svc-thumbs {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .svc-thumb {
+      width: 110px;
+      height: 110px;
+      border-radius: 10px;
+      cursor: pointer;
+      overflow: hidden;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+    }
+    .svc-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    .svc-thumb:hover img { transform: scale(1.08); }
+    .svc-thumb.active {
+      border-color: var(--color-primary);
+      box-shadow: 0 4px 12px rgba(41,171,226,0.3);
+    }
+
+    .svc-main-img-box {
+      flex-grow: 1;
+      border-radius: 20px;
+      overflow: hidden;
+      height: 600px;
+      position: relative;
+    }
+    .svc-main-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease, opacity 0.25s ease;
+      display: block;
+    }
+    .svc-main-img-box:hover img { transform: scale(1.03); }
+
+    @media (max-width: 991px) {
+      .svc-slider { flex-direction: column-reverse; gap: 0.75rem; }
+      .svc-thumbs { flex-direction: row; overflow-x: auto; padding-bottom: 4px; }
+      .svc-main-img-box { height: 280px; max-width: 100%; }
+    }
+
+    /* SERVICE CONTENT */
+    .service-content img.main-img {
+      width: 100%;
+      border-radius: 20px;
+      box-shadow: var(--shadow-md);
+      margin-bottom: 2.5rem;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .feature-icon {
+      width: 60px;
+      height: 60px;
+      background: var(--brand-gradient);
+      color: #ffffff;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      box-shadow: 0 6px 20px rgba(31, 131, 200, 0.3);
+      transition: var(--transition);
+    }
+
+    .feature-item:hover .feature-icon {
+      transform: scale(1.08) rotate(-5deg);
+      box-shadow: 0 10px 28px rgba(31, 131, 200, 0.4);
+    }
+
+    .feature-item h4 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      background: var(--color-dark-blue);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      transition: all 0.4s ease;
+      display: inline-block;
+    }
+
+    .feature-item:hover h4 {
+      background: var(--brand-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+
+    .feature-item p {
+      font-size: 0.95rem;
+      color: var(--color-text-muted);
+      margin-bottom: 0;
+      line-height: 1.6;
+      font-weight: 400;
+    }
+
+    .service-content h2:not(.accordion-header) {
+      /* Handled by English Balancing Rules */
+      margin-bottom: 1.5rem;
+      line-height: 1.3;
+      background: var(--color-dark-blue);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      transition: all 0.4s ease;
+      display: block;
+      cursor: default;
+      letter-spacing: -0.5px;
+    }
+
+    .service-content h2:not(.accordion-header):hover {
+      background: var(--brand-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+
+    .service-content p {
+      /* Handled by English Balancing Rules */
+      margin-bottom: 1.5rem;
+    }
+
+    /* Reset accordion headings — must not inherit gradient */
+    .service-content .accordion-header,
+    .service-content .accordion-button {
+      background: none !important;
+      -webkit-background-clip: unset !important;
+      background-clip: unset !important;
+      -webkit-text-fill-color: unset !important;
+      color: var(--color-dark-blue) !important;
+    }
+
+    .service-content .accordion-button:not(.collapsed) {
+      color: var(--color-primary) !important;
+    }
+
+    .service-content h3:not(.accordion-header) {
+      font-size: 1.4rem;
+      font-weight: 500;
+      background: var(--color-dark-blue);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      transition: all 0.4s ease;
+      display: block;
+      cursor: default;
+      margin-bottom: 1.5rem;
+    }
+
+    .service-content h3:not(.accordion-header):hover {
+      background: var(--brand-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+
+    .service-content .content-accordion {
+      margin-top: 3rem;
+    }
+
+    .accordion-item {
+      border: none;
+      border-radius: 16px !important;
+      margin-bottom: 15px;
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+
+    .accordion-button {
+      padding: 20px 25px;
+      font-weight: 500;
+      font-size: 1.05rem;
+      color: var(--color-dark-blue);
+      background: #fff;
+      box-shadow: none !important;
+      border-radius: 16px !important;
+    }
+
+    .accordion-button:not(.collapsed) {
+      color: var(--brand-mid) !important;
+      background: rgba(31, 131, 200, 0.04) !important;
+    }
+
+    /* Custom professional arrow */
+    .accordion-button::after {
+      width: 32px;
+      height: 32px;
+      background-image: none !important;
+      background: var(--brand-gradient);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      content: '';
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M1.5 5.5 8 12l6.5-6.5' stroke='white' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      -webkit-mask-repeat: no-repeat;
+      -webkit-mask-position: center;
+      -webkit-mask-size: 55%;
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M1.5 5.5 8 12l6.5-6.5' stroke='white' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      mask-repeat: no-repeat;
+      mask-position: center;
+      mask-size: 55%;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 12px rgba(31, 131, 200, 0.35);
+    }
+
+    .accordion-button:not(.collapsed)::after {
+      transform: rotate(180deg);
+      box-shadow: 0 6px 18px rgba(31, 131, 200, 0.5);
+    }
+
+    .accordion-body {
+      background: #fff;
+      padding: 0 25px 25px;
+      color: var(--color-text-muted);
+      line-height: 1.7;
+    }
+
+    /* =============================================
+       FOOTER
+    ============================================= */
+    .service-content p {
+      font-size: 1.1rem;
+      color: var(--color-text-muted);
+      line-height: 1.9;
+      margin-bottom: 1.5rem;
+    }
+
+    .features-grid {
+      margin-top: 3rem;
+      margin-bottom: 2rem;
+    }
+
+    .feature-item {
+      background: #fff;
+      border-radius: 16px;
+      padding: 30px;
+      height: 100%;
+      border: 1px solid rgba(41, 171, 226, 0.1);
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+    }
+
+    .feature-item:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(41, 171, 226, 0.3);
+    }
+
+    .footer {
+      background: linear-gradient(to bottom, #00132b, #000c1d);
+      color: var(--color-white);
+      padding: 4rem 0 0;
+      position: relative;
+      overflow: hidden;
+      margin-top: auto; /* Pushes footer to the bottom of the viewport */
+    }
+    .footer::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--brand-gradient);
+      opacity: 0.8;
+      box-shadow: 0 0 20px rgba(31, 131, 200, 0.4);
+    }
+    /* Floating Decorative Orbs for Footer */
+    .footer-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      z-index: 0;
+      opacity: 0.12;
+      pointer-events: none;
+    }
+    .footer-orb--1 {
+      width: 400px; height: 400px;
+      background: var(--brand-deep);
+      top: -100px; left: -100px;
+    }
+    .footer-orb--2 {
+      width: 300px; height: 300px;
+      background: var(--brand-light);
+      bottom: 100px; right: -50px;
+    }
+    .footer .container { position: relative; z-index: 2; }
+
+    .footer__brand-text {
+      font-size: 1.6rem; font-weight: 800; color: #ffffff; letter-spacing: 0.05em;
+      background: #ffffff;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      transition: all 0.4s ease;
+      cursor: pointer;
+    }
+    .footer__brand-text:hover {
+      background: var(--brand-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+    .footer__logo { height: 50px; width: 50px; object-fit: cover; border-radius: 50%; border: 2px solid rgba(41, 171, 226, 0.3); box-shadow: 0 0 20px rgba(41, 171, 226, 0.2); }
+    .footer__desc { font-size: 0.8rem; color: rgba(255,255,255,0.5); line-height: 1.8; margin-top: 1rem; max-width: 320px; }
+
+    .footer__heading {
+      font-size: 0.9rem; font-weight: 800; color: var(--color-white); margin-bottom: 1.2rem;
+      position: relative;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      background: #ffffff;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      transition: all 0.4s ease;
+      cursor: default;
+    }
+    .footer__heading:hover {
+      background: var(--brand-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+
+    .footer__links { list-style: none; padding: 0; }
+    .footer__links li { margin-bottom: 0.8rem; }
+    .footer__links a { font-size: 0.8rem; color: rgba(255,255,255,0.6); transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 10px; }
+    .footer__links a:hover {
+      color: var(--brand-light);
+      transform: translateX(8px);
+    }
+    .footer__links a i {
+      font-size: 0.7rem;
+      opacity: 0.5;
+      transition: transform 0.3s ease;
+    }
+    .footer__links a:hover i {
+      transform: scale(1.4);
+      color: var(--brand-light);
+    }
+    .footer__contact-item { display: flex; align-items: flex-start; gap: 12px; font-size: 0.8rem; color: rgba(255,255,255,0.6); margin-bottom: 0.8rem; transition: color 0.3s; }
+    .footer__contact-item:hover { color: var(--color-white); }
+    .footer__contact-item i {
+      font-size: 1.1rem;
+      color: var(--brand-light);
+      background: rgba(47, 185, 255, 0.1);
+      width: 40px; height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border: 1px solid rgba(47, 185, 255, 0.15);
+      transition: all 0.3s ease;
+    }
+    .footer__contact-item:hover i {
+      background: var(--brand-gradient);
+      color: #fff;
+      transform: scale(1.1) rotate(-5deg);
+      box-shadow: 0 4px 15px rgba(31, 131, 200, 0.3);
+    }
+    .footer__contact-item a { color: inherit; transition: color 0.3s; }
+    .footer__contact-item a:hover { color: var(--brand-light); }
+
+    .footer__bottom { padding: 1.5rem 0; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 2.5rem; }
+    .footer__social { display: flex; gap: 12px; }
+    .footer__social a {
+      width: 44px; height: 44px;
+      background: var(--brand-deep);
+      border: none;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-white);
+      font-size: 1rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    .footer__social a:hover {
+      background: var(--brand-gradient);
+      border-color: transparent;
+      color: var(--color-white);
+      transform: translateY(-5px) rotate(8deg);
+      box-shadow: 0 10px 25px rgba(31, 131, 200, 0.4);
+    }
+    .footer__copyright { font-size: 0.75rem; color: rgba(255,255,255,0.3); }
+    [dir="rtl"] .footer__links a:hover { transform: translateX(-5px); }
+
+    @media (max-width: 991.98px) {
+      .footer { text-align: center !important; }
+      .footer .d-flex { justify-content: center !important; align-items: center !important; }
+      .footer__desc { margin: 1.5rem auto !important; text-align: center !important; max-width: 350px; }
+      .footer__social { justify-content: center !important; }
+      .footer__contact-item { flex-direction: column !important; align-items: center !important; text-align: center !important; gap: 8px !important; margin-bottom: 1.5rem !important; }
+      .footer__contact-item i { margin-bottom: 4px; }
+      .footer__heading { text-align: center !important; margin-top: 1.5rem !important; margin-bottom: 1.2rem !important; }
+      .footer__links { text-align: center !important; padding: 0 !important; }
+      .footer__links a { justify-content: center !important; }
+      [dir="rtl"] .footer, [dir="rtl"] .footer * { text-align: center !important; }
+      [dir="rtl"] .footer__heading::after { left: 50% !important; right: auto !important; transform: translateX(-50%) !important; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ============================================================
+       NAVBAR (RE-STORED)
+  ============================================================ -->
+  <nav class="navbar navbar-expand-lg sticky-top" id="mainNavbar">
+    <div class="container navbar__container">
+
+      <!-- Brand -->
+      <a class="navbar__brand navbar-brand" href="index.html">
+        <img src="assets/images/logo.png" alt="Avantic Pharma Logo" class="navbar__logo" />
+        <span class="navbar__brand-text" data-en="AVANTIC" data-ar="أفانتيك">AVANTIC</span>
+      </a>
+
+      <!-- Actions (Login + Lang) -->
+      <div class="navbar__actions d-flex align-items-center">
+        <a href="login.html" class="nav-btn-register me-2">
+          <i class="bi bi-person-fill"></i>
+          <span data-en="LOGIN" data-ar="دخول">LOGIN</span>
+        </a>
+        <div class="lang-dropdown">
+          <button class="lang-toggle" id="langToggleBtn" aria-label="Select Language">
+            <i class="bi bi-globe"></i>
+          </button>
+          <div class="lang-menu" id="langMenu">
+            <button onclick="changeLang('en')"><span>English</span></button>
+            <button onclick="changeLang('ar')"><span>العربية</span></button>
+            <button onclick="changeLang('fr')"><span>Français</span></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Toggler -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar__bar"></span>
+        <span class="navbar__bar"></span>
+        <span class="navbar__bar"></span>
+      </button>
+
+      <!-- Menu -->
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav mx-auto gap-1">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html" data-en="Home" data-ar="الرئيسية">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="products.html" data-en="Products" data-ar="المنتجات">Products</a>
+          </li>
+
+          <!-- Services Mega Dropdown -->
+          <li class="nav-item mega-dropdown">
+            <a class="nav-link active" href="services.html">
+              <span data-en="Services" data-ar="الخدمات">Services</span>
+              <i class="bi bi-chevron-down ms-1" style="font-size: 0.7rem;"></i>
+            </a>
+
+            <div class="mega-menu">
+               <div class="container">
+                  <div class="row g-4 align-items-center">
+                     <!-- Left: Preview -->
+                     <div class="col-lg-5 d-none d-lg-block">
+                        <div class="mega-menu__preview">
+                           <img src="assets/images/service-preview.jpg" alt="Service Preview">
+                           <div class="mega-menu__preview-content">
+                              <h4 data-en="Scientific Excellence" data-ar="تميز علمي">Scientific Excellence</h4>
+                              <p data-en="Unlocking health potential with innovative pharmaceutical services." data-ar="إطلاق إمكانات الصحة من خلال خدمات صيدلانية مبتكرة.">Unlocking health potential with innovative pharmaceutical services.</p>
+                               <a href="services.html" class="mega-menu__cta-btn">
+                                 <span data-en="All Services" data-ar="جميع الخدمات">All Services</span>
+                                 <i class="bi bi-arrow-right"></i>
+                               </a>
+                           </div>
+                        </div>
+                     </div>
+                     <!-- Right: Links -->
+                     <div class="col-lg-7">
+                        <div class="mega-menu__links">
+                           <div class="row g-4 align-items-center">
+                              <div class="col-md-6">
+
+                                 <ul class="mega-menu__list">
+                                    <li><a href="services.html"><i class="bi bi-chevron-right small"></i> <span data-en="Laboratory Research" data-ar="أبحاث المختبرات">Laboratory Research</span></a></li>
+                                    <li><a href="services.html"><i class="bi bi-chevron-right small"></i> <span data-en="Clinical Testing" data-ar="الاختبارات السريرية">Clinical Testing</span></a></li>
+                                    <li><a href="services.html"><i class="bi bi-chevron-right small"></i> <span data-en="Standard Optimization" data-ar="تحسين المعايير">Standard Optimization</span></a></li>
+                                    <li><a href="services.html"><i class="bi bi-chevron-right small"></i> <span data-en="Pharma Logistics" data-ar="الخدمات اللوجستية للأدوية">Pharma Logistics</span></a></li>
+                                 </ul>
+                              </div>
+                              <div class="col-md-6">
+
+                                 <ul class="mega-menu__list">
+                                    <li><a href="services.html"><i class="bi bi-chevron-right small"></i> <span data-en="GMPC Compliance" data-ar="امتثال GMPC">GMPC Compliance</span></a></li>
+                                    <li><a href="services.html"><i class="bi bi-chevron-right small"></i> <span data-en="Global Distribution" data-ar="التوزيع العالمي">Global Distribution</span></a></li>
+                                    <li><a href="services.html"><i class="bi bi-chevron-right small"></i> <span data-en="Retail Partnership" data-ar="شراكة التجزئة">Retail Partnership</span></a></li>
+                                    <li><a href="services.html"><i class="bi bi-chevron-right small"></i> <span data-en="Innovation Center" data-ar="مركز الابتكار">Innovation Center</span></a></li>
+                                 </ul>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="partners.html" data-en="Partners" data-ar="شركاؤنا">Partners</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="investors.html" data-en="Investors" data-ar="المستثمرون">Investors</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="news.html" data-en="News" data-ar="الأخبار">News</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about.html" data-en="About Us" data-ar="من نحن">About Us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contact.html" data-en="Contact Us" data-ar="تواصل معنا">Contact Us</a>
+          </li>
+        </ul>
+      </div>
+      <div class="nav-progress" id="scrollProgress"></div>
+    </div>
+  </nav>
+
+  <!-- Page Hero -->
+  <header class="page-hero reveal">
+    <div class="container">
+      <div class="page-hero__content">
+        <div class="page-hero__breadcrumb">
+          <a href="index.html" data-en="Home" data-ar="الرئيسية">Home</a>
+          <i class="bi bi-chevron-right sep"></i>
+          <a href="services.html" data-en="Services" data-ar="الخدمات">Services</a>
+          <i class="bi bi-chevron-right sep"></i>
+          <span data-en="Research & Development" data-ar="البحث والتطوير">Research & Development</span>
+        </div>
+        <h1 class="hero__glow-text" data-en="Research & Development" data-ar="البحث والتطوير">Research & Development</h1>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="service-main">
+    <div class="container">
+
+      <!-- Image Slider -->
+      <div class="svc-slider reveal">
+        <!-- Thumbnails -->
+        <div class="svc-thumbs">
+          <div class="svc-thumb active" onclick="switchSvcImg(this, 'assets/images/main.jpg')">
+            <img src="assets/images/main.jpg" alt="Service Main" />
+          </div>
+          <div class="svc-thumb" onclick="switchSvcImg(this, 'assets/images/service1.jpg')">
+            <img src="assets/images/service1.jpg" alt="Service 1" />
+          </div>
+          <div class="svc-thumb" onclick="switchSvcImg(this, 'assets/images/service2.jpg')">
+            <img src="assets/images/service2.jpg" alt="Service 2" />
+          </div>
+          <div class="svc-thumb" onclick="switchSvcImg(this, 'assets/images/service3.jpg')">
+            <img src="assets/images/service3.jpg" alt="Service 3" />
+          </div>
+        </div>
+        <!-- Main Image -->
+        <div class="svc-main-img-box">
+          <img src="assets/images/main.jpg" alt="Service Main Image" id="svcMainImg" />
+        </div>
+      </div>
+
+      <!-- Service Content -->
+      <div class="service-content reveal">
+
+        <h2 data-en="Pioneering the Future of Medicine" data-ar="ريادة مستقبل الطب">Pioneering the Future of Medicine</h2>
+        <p data-en="At Avantic Pharma, our Research & Development (R&D) division is the beating heart of our innovation engine. We are dedicated to discovering, developing, and delivering transformative medicines that address severe unmet medical needs. Our multidisciplinary teams of scientists work tirelessly utilizing advanced analytical platforms and state-of-the-art laboratory facilities."
+          data-ar="في أفانتيك فارما، يعتبر قسم البحث والتطوير (R&D) القلب النابض لمحرك الابتكار لدينا. نحن مكرسون لاكتشاف وتطوير وتقديم أدوية تحويلية تلبي الاحتياجات الطبية غير الملباة بشدة. تعمل فرقنا متعددة التخصصات من العلماء بلا كلل باستخدام منصات تحليلية متقدمة ومرافق مختبرية حديثة.">
+          At Avantic Pharma, our Research &amp; Development (R&amp;D) division is the beating heart of our innovation engine. We are dedicated to discovering, developing, and delivering transformative medicines that address severe unmet medical needs. Our multidisciplinary teams of scientists work tirelessly utilizing advanced analytical platforms and state-of-the-art laboratory facilities.</p>
+        <p data-en="We provide end-to-end R&D services spanning from early stage drug discovery to late-stage formulation development, scaling up, and preparation for commercial manufacturing."
+          data-ar="نقدم خدمات بحث وتطوير شاملة تمتد من اكتشاف الأدوية في المراحل المبكرة إلى تطوير التركيبات في المراحل المتأخرة، وتوسيع النطاق، والتحضير للتصنيع التجاري.">
+          We provide end-to-end R&amp;D services spanning from early stage drug discovery to late-stage formulation development, scaling up, and preparation for commercial manufacturing.</p>
+
+            <!-- Key Features Grid -->
+            <div class="row g-4 features-grid">
+              <div class="col-md-6">
+                <div class="feature-item">
+                  <div class="feature-icon"><i class="bi bi-diagram-3"></i></div>
+                  <h4 data-en="Formulation Development" data-ar="تطوير التركيبات">Formulation Development</h4>
+                  <p data-en="Creating robust solid, liquid, and semi-solid dosage forms ensuring maximum stability and bioavailability."
+                    data-ar="إنشاء أشكال جرعات صلبة وسائلة وشبه صلبة قوية تضمن أقصى درجات الاستقرار والتوافر البيولوجي.">
+                    Creating robust solid, liquid, and semi-solid dosage forms ensuring maximum stability and
+                    bioavailability.</p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="feature-item">
+                  <div class="feature-icon"><i class="bi bi-droplet-half"></i></div>
+                  <h4 data-en="Analytical Testing" data-ar="الاختبارات التحليلية">Analytical Testing</h4>
+                  <p data-en="Extensive analytical method development and validation complying strictly with global ICH guidelines."
+                    data-ar="تطوير واعتماد طرق تحليلية مكثفة تمتثل بدقة لمبادئ ICH التوجيهية العالمية.">Extensive
+                    analytical method development and validation complying strictly with global ICH guidelines.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Accordion Process -->
+            <h3 class="fw-bold mt-5 mb-4" style="color:var(--color-dark-blue);" data-en="Our R&D Process"
+              data-ar="عملية البحث والتطوير الخاصة بنا">Our R&D Process</h3>
+            <div class="accordion content-accordion" id="processAccordion">
+
+              <!-- Step 1 -->
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                    aria-expanded="true" aria-controls="collapseOne">
+                    <span data-en="01. Discovery & Pre-formulation" data-ar="01. الاكتشاف وما قبل الصياغة">01. Discovery
+                      & Pre-formulation</span>
+                  </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                  data-bs-parent="#processAccordion">
+                  <div class="accordion-body"
+                    data-en="Initial assessment of API characteristics, solubility profiling, and compatibility studies to select the optimal excipients for robust product design."
+                    data-ar="التقييم الأولي لخصائص المكون الصيدلاني الفعال (API)، وتحديد قابلية الذوبان، ودراسات التوافق لتحديد المسواغ الأمثل لتصميم منتج قوي.">
+                    Initial assessment of API characteristics, solubility profiling, and compatibility studies to select
+                    the optimal excipients for robust product design.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Step 2 -->
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    <span data-en="02. Prototyping & Optimization" data-ar="02. النماذج الأولية والتحسين">02.
+                      Prototyping & Optimization</span>
+                  </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                  data-bs-parent="#processAccordion">
+                  <div class="accordion-body"
+                    data-en="Developing multiple batches using Design of Experiments (DoE) methodology to pinpoint the optimal combination that yields maximum efficacy."
+                    data-ar="تطوير دفعات متعددة باستخدام منهجية تصميم التجارب (DoE) لتحديد التركيبة المثلى التي تحقق أقصى قدر من الفعالية.">
+                    Developing multiple batches using Design of Experiments (DoE) methodology to pinpoint the optimal
+                    combination that yields maximum efficacy.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Step 3 -->
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="headingThree">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    <span data-en="03. Scale-up & Tech Transfer" data-ar="03. التوسع ونقل التكنولوجيا">03. Scale-up &
+                      Tech Transfer</span>
+                  </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                  data-bs-parent="#processAccordion">
+                  <div class="accordion-body"
+                    data-en="Transitioning lab-scale models successfully to pilot batches and finally into full commercial manufacturing sizes without loss of quality."
+                    data-ar="الانتقال الناجح للنماذج ذات النطاق المختبري إلى الدفعات التجريبية وأخيراً إلى أحجام التصنيع التجاري الكامل دون فقدان الجودة.">
+                    Transitioning lab-scale models successfully to pilot batches and finally into full commercial
+                    manufacturing sizes without loss of quality.
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- ============================================================
+       FOOTER (RE-STORED)
+  ============================================================ -->
+  <footer class="footer">
+    <!-- Decorative Orbs -->
+    <div class="footer-orb footer-orb--1"></div>
+    <div class="footer-orb footer-orb--2"></div>
+
+    <div class="container">
+      <div class="row g-5">
+        <div class="col-md-6 col-lg-3">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <img src="assets/images/logo.png" alt="Avantic Logo" class="footer__logo" />
+            <span class="footer__brand-text" data-en="AVANTIC" data-ar="أفانتيك">AVANTIC</span>
+          </div>
+          <p class="footer__desc" data-en="Advancing human health through innovative pharmaceutical solutions. Science Forward, Healthier World." data-ar="تطوير صحة الإنسان من خلال حلول دوائية مبتكرة. العلم للأمام، عالم أكثر صحة.">Advancing human health through innovative pharmaceutical solutions. Science Forward, Healthier World.</p>
+          
+          <div class="footer__social mt-4">
+            <a href="#" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+            <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+            <a href="#" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>
+            <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-2">
+          <h4 class="footer__heading" data-en="Quick Links" data-ar="روابط سريعة">Quick Links</h4>
+          <ul class="footer__links">
+            <li><a href="index.html"><i class="bi bi-chevron-right"></i><span data-en="Home" data-ar="الرئيسية">Home</span></a></li>
+            <li><a href="products.html"><i class="bi bi-chevron-right"></i><span data-en="Products" data-ar="المنتجات">Products</span></a></li>
+            <li><a href="news.html"><i class="bi bi-chevron-right"></i><span data-en="News" data-ar="الأخبار">News</span></a></li>
+            <li><a href="about.html"><i class="bi bi-chevron-right"></i><span data-en="About Us" data-ar="عن الشركة">About Us</span></a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+          <h4 class="footer__heading" data-en="Contact Info" data-ar="معلومات التواصل">Contact Info</h4>
+          <div class="footer__contact-item">
+            <i class="bi bi-envelope-fill"></i>
+            <a href="mailto:info@avanticpharma.com">info@avanticpharma.com</a>
+          </div>
+          <div class="footer__contact-item">
+            <i class="bi bi-telephone-fill"></i>
+            <span dir="ltr">+20 10 90080600</span>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <h4 class="footer__heading" data-en="Address & Hours" data-ar="العنوان والمواعيد">Address & Hours</h4>
+          <div class="footer__contact-item">
+            <i class="bi bi-geo-alt-fill"></i>
+            <span data-en="AVANTIC Pharmaceuticals, Cairo, Egypt" data-ar="أفانتيك فارما للأدوية، القاهرة، مصر">AVANTIC Pharmaceuticals, Cairo, Egypt</span>
+          </div>
+          <div class="footer__contact-item">
+            <i class="bi bi-clock-fill"></i>
+            <div class="d-flex flex-column">
+                <span data-en="Mon - Fri: 08:30 AM - 05:30 PM" data-ar="الاثنين - الجمعة: 08:30 ص - 05:30 م">Mon - Fri: 08:30 AM - 05:30 PM</span>
+                <span data-en="Sat - Sun: Closed" data-ar="السبت - الأحد: مغلق">Sat - Sun: Closed</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer__bottom d-flex flex-column flex-md-row align-items-center justify-content-center gap-3 mt-4">
+        <p class="footer__copyright mb-0">
+          <span data-en="© 2025 Avantic Pharma. All rights reserved." data-ar="© 2025 أفانتيك فارما. جميع الحقوق محفوظة.">© 2025 Avantic Pharma. All rights reserved.</span>
+          &nbsp;|&nbsp;
+          <a href="#" style="color: rgba(255,255,255,0.4); font-size: 0.8rem;" data-en="Privacy Policy" data-ar="سياسة الخصوصية">Privacy Policy</a>
+          &nbsp;|&nbsp;
+          <a href="#" style="color: rgba(255,255,255,0.4); font-size: 0.8rem;" data-en="Terms of Use" data-ar="شروط الاستخدام">Terms of Use</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    (function () {
+      /* ── Language Toggle Logic ── */
+      function toggleLang() {
+        const html = document.documentElement;
+        const body = document.body;
+        const currentLang = html.getAttribute('lang') || 'en';
+        const isRTL = currentLang === 'ar';
+        const nextLang = isRTL ? 'en' : 'ar';
+        const btn = document.getElementById('langToggle');
+
+        if (nextLang === 'ar') {
+          html.setAttribute('lang', 'ar');
+          html.setAttribute('dir', 'rtl');
+          body.classList.add('rtl');
+          localStorage.setItem('lang', 'ar');
+          if (btn) btn.textContent = 'EN';
+          document.title = html.getAttribute('data-title-ar');
+          // Update footer icons for RTL
+          document.querySelectorAll('.footer__links i.bi-chevron-right').forEach(icon => icon.classList.replace('bi-chevron-right', 'bi-chevron-left'));
+        } else {
+          html.setAttribute('lang', 'en');
+          html.setAttribute('dir', 'ltr');
+          body.classList.remove('rtl');
+          localStorage.setItem('lang', 'en');
+          if (btn) btn.textContent = 'عربي';
+          document.title = html.getAttribute('data-title-en');
+          // Update footer icons for LTR
+          document.querySelectorAll('.footer__links i.bi-chevron-left').forEach(icon => icon.classList.replace('bi-chevron-left', 'bi-chevron-right'));
+        }
+
+        document.querySelectorAll('[data-en]').forEach(el => {
+          el.textContent = (nextLang === 'ar') ? el.getAttribute('data-ar') : el.getAttribute('data-en');
+        });
+      }
+      window.toggleLang = toggleLang;
+
+      document.addEventListener('DOMContentLoaded', () => {
+        // Init Lang
+        const savedLang = localStorage.getItem('lang') || 'en';
+        if (savedLang === 'ar') {
+          const html = document.documentElement;
+          html.setAttribute('lang', 'ar');
+          html.setAttribute('dir', 'rtl');
+          document.body.classList.add('rtl');
+          const btn = document.getElementById('langToggle');
+          if (btn) btn.textContent = 'EN';
+          document.title = html.getAttribute('data-title-ar');
+          document.querySelectorAll('[data-en]').forEach(el => {
+            el.textContent = el.getAttribute('data-ar');
+          });
+        }
+
+        const langBtn = document.getElementById('langToggleBtn');
+        const langMenu = document.getElementById('langMenu');
+        
+        if (langBtn) {
+          langBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            langMenu.classList.toggle('show');
+          });
+        }
+        
+        window.addEventListener('click', () => {
+          if (langMenu) langMenu.classList.remove('show');
+        });
+
+        window.changeLang = function(langCode) {
+          if (langCode === 'fr') {
+            alert('French language content is coming soon!');
+            return;
+          }
+          const currentLang = document.documentElement.getAttribute('lang');
+          if (langCode !== currentLang) {
+            toggleLang();
+          }
+        }
+
+        // Header Scroll Effect
+        const navbar = document.getElementById('mainNavbar');
+        const progress = document.getElementById('scrollProgress');
+        window.addEventListener('scroll', () => {
+          if (window.scrollY > 30) {
+            navbar.classList.add('scrolled');
+          } else {
+            navbar.classList.remove('scrolled');
+          }
+          
+          if (progress) {
+            const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (window.scrollY / h) * 100;
+            progress.style.width = scrolled + '%';
+          }
+        }, { passive: true });
+
+        // Intersection Observer for Reveal
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+            }
+          });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Service Image Slider
+        window.switchSvcImg = function(thumb, src) {
+          const mainImg = document.getElementById('svcMainImg');
+          mainImg.style.opacity = '0';
+          setTimeout(() => {
+            mainImg.src = src;
+            mainImg.style.opacity = '1';
+          }, 200);
+          document.querySelectorAll('.svc-thumb').forEach(t => t.classList.remove('active'));
+          thumb.classList.add('active');
+        };
+      });
+    })();
+  </script>
+</body>
+
+</html>

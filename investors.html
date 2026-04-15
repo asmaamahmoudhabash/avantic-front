@@ -1,0 +1,1397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-en="Investor Relations — Avantic Pharma" data-ar="علاقات المستثمرين — أفانتيك فارما">Investor Relations — Avantic Pharma</title>
+  
+  <!-- Bootstrap 5 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =============================================
+       CSS CUSTOM PROPERTIES — BRAND TOKENS
+    ============================================= */
+    :root {
+      --color-primary:      #29ABE2;
+      --color-dark-blue:    rgb(0, 24, 60);
+      /* Brand Identity Colors */
+      --brand-deep:         #105791;
+      --brand-mid:          #1f83c8;
+      --brand-light:        #2FB9FF;
+      --brand-gradient:     linear-gradient(135deg, var(--brand-deep) 0%, var(--brand-mid) 50%, var(--brand-light) 100%);
+      
+      --color-medium-blue:  #2196C4;
+      --color-light-accent: #33CCFF;
+      --color-bg:           #f0f8ff;
+      --color-white:        #ffffff;
+      --color-text-dark:    rgb(0, 24, 60);
+      --color-text-body:    rgb(0, 24, 60);
+      --color-text-muted:   #6c8098;
+
+      --font-en: 'Poppins', sans-serif;
+      --font-ar: 'Cairo', sans-serif;
+
+      --shadow-sm:  0 4px 15px rgba(31,78,140,0.06);
+      --shadow-md:  0 10px 40px rgba(31,78,140,0.12);
+      --shadow-lg:  0 20px 60px rgba(31,78,140,0.18);
+
+      --transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-en); color: var(--color-text-dark); background: var(--color-bg); line-height: 1.7; overflow-x: hidden; }
+    body.rtl { font-family: var(--font-ar); direction: rtl; text-align: right; }
+    img { max-width: 100%; height: auto; display: block; }
+    a { text-decoration: none; transition: var(--transition); }
+
+    .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    html[lang="en"] p, html[lang="en"] li { font-size: 0.92rem; font-weight: 400; }
+    html[lang="en"] .nav-link, html[lang="en"] .btn { font-size: 12.5px; font-weight: 500; }
+    .section-tag { display: inline-flex; align-items: center; padding: 6px 20px; background: rgba(41,171,226,0.1); color: var(--color-primary); text-transform: uppercase; border-radius: 50px; margin-bottom: 20px; font-weight: 700; font-size: 0.85rem; letter-spacing: 1px; }
+
+    /* =============================================
+       NAVBAR (SYNCED)
+    ============================================= */
+        /* =============================================
+       NAVBAR
+    ============================================= */
+    @keyframes slideDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to   { transform: translateY(0);     opacity: 1; }
+    }
+    @keyframes navFadeIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideUnderlineLTR {
+      from { transform: scaleX(0); }
+      to   { transform: scaleX(1); }
+    }
+
+    .navbar {
+      background: var(--color-white);
+      min-height: 75px;
+      padding: 25px 0;
+      border-bottom: 1px solid rgba(41,171,226,0.1);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1050;
+      overflow: visible;
+      animation: slideDown 0.6s ease-out forwards;
+    }
+    .navbar.scrolled {
+      background: rgba(255, 255, 255, 0.8) !important;
+      backdrop-filter: blur(12px) saturate(180%);
+      min-height: 65px;
+      box-shadow: 0 4px 30px rgba(31,78,140,0.08);
+      border-bottom: 1px solid rgba(41,171,226,0.15);
+    }
+
+    /* Progress bar at bottom of header */
+    .nav-progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      background: linear-gradient(to right, var(--color-primary), var(--color-light-accent));
+      width: 0%;
+      transition: width 0.1s linear;
+      z-index: 1060;
+    }
+
+    /* Container acts as the flex row */
+    .navbar__container {
+      display: flex;
+      align-items: center;
+      min-height: 70px;
+      gap: 0;
+    }
+
+    /* ---- Brand ---- */
+    .navbar__brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      order: 1;
+      flex-shrink: 0;
+      padding: 0;
+      transition: transform 0.3s ease;
+    }
+    .navbar__brand:hover { transform: scale(1.02); }
+    .navbar__logo {
+      height: 70px;
+      width: 70px;
+      object-fit: cover;
+      border-radius: 50%;
+      transition: filter 0.3s ease;
+    }
+    .navbar__brand:hover .navbar__logo {
+      filter: drop-shadow(0 0 8px rgba(41,171,226,0.4));
+    }
+    .navbar__brand-text {
+      font-size: 1.85rem;
+      font-weight: 500;
+      color: var(--color-dark-blue);
+      letter-spacing: 0.08em;
+      background: var(--color-dark-blue);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      transition: all 0.4s ease;
+    }
+    .navbar__brand:hover .navbar__brand-text {
+      background: var(--brand-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+
+    /* ---- Collapse (centre slot) ---- */
+    #navMenu { order: 2; }
+
+    /* ---- Nav links ---- */
+    .navbar-nav .nav-item {
+      opacity: 0;
+      animation: navFadeIn 0.4s ease forwards;
+    }
+    .navbar-nav .nav-item:nth-child(1) { animation-delay: 0.10s; }
+    .navbar-nav .nav-item:nth-child(2) { animation-delay: 0.18s; }
+    .navbar-nav .nav-item:nth-child(3) { animation-delay: 0.26s; }
+    .navbar-nav .nav-item:nth-child(4) { animation-delay: 0.34s; }
+    .navbar-nav .nav-item:nth-child(5) { animation-delay: 0.42s; }
+    .navbar-nav .nav-item:nth-child(6) { animation-delay: 0.50s; }
+    .navbar-nav .nav-item:nth-child(7) { animation-delay: 0.58s; }
+    .navbar-nav .nav-item:nth-child(8) { animation-delay: 0.66s; }
+
+    .navbar-nav .nav-link {
+      font-size: 14.5px;
+      font-weight: 500;
+      color: var(--color-text-dark);
+      padding: 8px 14px !important;
+      border-radius: 50px;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      white-space: nowrap;
+      margin: 0 2px;
+      border: 1px solid transparent;
+    }
+    .navbar-nav .nav-link:hover {
+      color: var(--color-primary);
+      background: rgba(41,171,226,0.08);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(41,171,226,0.12);
+      border-color: rgba(41,171,226,0.15);
+    }
+
+    .navbar-nav .nav-link.active {
+      color: var(--color-white) !important;
+      background: var(--brand-gradient);
+      box-shadow: 0 10px 25px rgba(31, 131, 200, 0.3);
+      border-color: transparent;
+    }
+    /* Simple hover refinement for active item */
+    .navbar-nav .nav-link.active:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 30px rgba(41,171,226,0.45);
+    }
+
+    /* ---- Mega Menu — Desktop (RE-STORED) ---- */
+    @media (min-width: 992px) {
+      .navbar, .navbar__container, .navbar-collapse, .navbar-nav { overflow: visible !important; }
+      .mega-dropdown { position: relative !important; }
+
+      .mega-menu {
+        position: absolute !important;
+        top: 100% !important;
+        left: -150px !important;
+        width: 850px !important;
+        max-width: 90vw !important;
+        transform: none !important;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(20px);
+        border-radius: 32px;
+        box-shadow: 0 40px 100px rgba(0, 24, 60, 0.15), 0 10px 40px rgba(41, 171, 226, 0.1);
+        padding: 1.5rem 2rem;
+        display: none;
+        z-index: 100000;
+        border: 1px solid rgba(41, 171, 226, 0.15);
+        border-top: 4px solid var(--color-primary);
+        animation: megaSlideInFadeFixed 0.3s ease forwards;
+        margin-top: 10px;
+      }
+      /* Transparent bridge to prevent hover loss */
+      .mega-dropdown::after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        height: 20px;
+        z-index: 10;
+      }
+
+      .mega-menu::before {
+        content: '';
+        position: absolute;
+        top: -12px;
+        left: 170px;
+        margin-left: 0;
+        border-left: 12px solid transparent;
+        border-right: 12px solid transparent;
+        border-bottom: 12px solid var(--color-primary);
+      }
+      [dir="rtl"] .mega-menu { left: auto !important; right: -150px !important; }
+      [dir="rtl"] .mega-menu::before { left: auto; right: 170px; }
+
+      .mega-dropdown:hover .mega-menu { display: block; }
+
+      @keyframes megaSlideInFadeFixed {
+        from { opacity: 0; transform: translateY(10px) scale(0.98); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
+      }
+
+      /* Preview Card */
+      .mega-menu__preview {
+        position: relative;
+        border-radius: 20px;
+        overflow: hidden;
+        height: 100%;
+        min-height: 300px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+      .mega-menu__preview img {
+          width: 100%; height: 100%; object-fit: cover;
+          transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .mega-menu__preview:hover img { transform: scale(1.05); }
+      .mega-menu__preview-content {
+        position: absolute; bottom: 0; left: 0; right: 0; padding: 30px 25px;
+        background: linear-gradient(to top, rgba(0, 24, 60, 0.95) 0%, rgba(0, 24, 60, 0.7) 40%, transparent 100%);
+        color: #fff;
+        transition: padding-bottom 0.4s ease;
+      }
+      .mega-menu__preview:hover .mega-menu__preview-content { padding-bottom: 50px; }
+      .mega-menu__preview-content h4 { font-size: 1.5rem; font-weight: 600; margin-bottom: 10px; color: #fff;}
+      .mega-menu__preview-content p { font-size: 0.85rem; opacity: 0.9; margin: 0; line-height: 1.4;}
+
+      .mega-menu__cta-btn {
+        display: inline-flex; align-items: center; gap: 8px;
+        margin-top: 18px; padding: 10px 24px;
+        background: var(--brand-gradient); color: #fff !important;
+        border-radius: 50px; font-size: 0.82rem; font-weight: 600;
+        text-decoration: none; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 0 4px 15px rgba(31, 131, 200, 0.3);
+      }
+      .mega-menu__cta-btn:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 10px 25px rgba(31, 131, 200, 0.45); }
+      .mega-menu__cta-btn i { font-size: 0.9rem; transition: transform 0.3s; }
+      .mega-menu__cta-btn:hover i { transform: translateX(4px); }
+      [dir="rtl"] .mega-menu__cta-btn:hover i { transform: translateX(-4px); }
+
+      /* Links Section */
+      .mega-menu__title {
+        font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+        color: var(--color-primary); letter-spacing: 0.12em; margin-bottom: 1.5rem;
+        display: inline-block; padding: 8px 18px;
+        background: linear-gradient(135deg, rgba(41,171,226,0.1) 0%, rgba(41,171,226,0.03) 100%);
+        border-radius: 50px; border: 1px solid rgba(41,171,226,0.1);
+      }
+      .mega-menu__list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 14px; }
+      .mega-menu__list a {
+        display: flex; align-items: center; gap: 10px; font-size: 0.92rem;
+        color: var(--color-dark-blue); font-weight: 500; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        padding: 10px 14px; border-radius: 12px; background: transparent;
+        white-space: nowrap;
+      }
+      .mega-menu__list a i {
+          color: var(--color-primary); font-size: 1rem; transition: all 0.3s ease;
+          width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;
+          background: rgba(41,171,226,0.08); border-radius: 8px; flex-shrink: 0;
+      }
+      .mega-menu__list a:hover {
+          color: var(--color-primary);
+          background: #f4fbff;
+          transform: translateX(8px);
+          box-shadow: 0 4px 15px rgba(41, 171, 226, 0.08);
+      }
+      .mega-menu__list a:hover i {
+          background: var(--color-primary);
+          color: #fff;
+          transform: scale(1.1);
+      }
+      [dir="rtl"] .mega-menu__list a:hover { transform: translateX(-8px); }
+    }
+
+    /* ---- Mega Menu — Mobile ---- */
+    @media (max-width: 991px) {
+      .mega-menu-wrapper { display: none; }
+      .mega-menu { display: none; padding: 8px 0; }
+      .mega-dropdown.open .mega-menu { display: block; }
+      .mega-menu__inner { flex-direction: column; }
+      .mega-menu__sidebar { display: none; }
+      .mega-menu__content { padding: 0; }
+      .mega-menu__section-label { font-size: 0.8rem; color: var(--color-primary); margin: 12px 0 6px 16px; font-weight: 600; }
+      [dir="rtl"] .mega-menu__section-label { margin: 12px 16px 6px 0; }
+      .mega-menu__grid { grid-template-columns: 1fr; gap: 0; margin-bottom: 0; }
+      .mega-menu__item { padding: 10px 20px; border-radius: 0; border-left: 2px solid transparent; }
+      .mega-menu__item:hover { background: rgba(41,171,226,0.05); border-left-color: var(--color-primary); transform: none; }
+      [dir="rtl"] .mega-menu__item { border-left: none; border-right: 2px solid transparent; }
+      [dir="rtl"] .mega-menu__item:hover { border-right-color: var(--color-primary); }
+      .mega-menu__item-icon { display: none; }
+      .mega-menu__item-desc { display: none; }
+      .mega-menu__footer { display: none; }
+    }
+
+    /* ---- Header Actions ---- */
+    .navbar__actions {
+      order: 3;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-left: 1.25rem;
+      flex-shrink: 0;
+    }
+    .nav-btn-register {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #fff;
+      background: var(--brand-gradient);
+      padding: 6px 16px;
+      border-radius: 50px;
+      box-shadow: 0 4px 15px rgba(31, 131, 200, 0.3);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    .nav-btn-register:hover {
+      box-shadow: 0 6px 20px rgba(31, 78, 140, 0.4);
+      transform: translateY(-2px);
+      color: #fff;
+    }
+    @media (max-width: 450px) {
+      .nav-btn-register span { display: none; }
+      .nav-btn-register { padding: 8px 12px; }
+      .navbar__brand-text { display: none !important; }
+    }
+
+    .lang-dropdown { position: relative; }
+    .lang-toggle {
+      width: 44px;
+      height: 44px;
+      border: 1px solid rgba(41,171,226,0.2);
+      border-radius: 50%;
+      background: rgba(255,255,255,0.8);
+      backdrop-filter: blur(8px);
+      color: var(--color-dark-blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .lang-toggle:hover {
+      background: var(--brand-gradient);
+      color: white;
+      border-color: transparent;
+      transform: rotate(15deg) scale(1.1);
+      box-shadow: 0 8px 20px rgba(31, 131, 200, 0.25);
+    }
+    .lang-menu {
+      position: absolute;
+      top: 130%;
+      right: 0;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 15px 45px rgba(0,0,0,0.1);
+      padding: 10px;
+      min-width: 150px;
+      display: none;
+      z-index: 1000;
+      border: 1px solid rgba(0,0,0,0.05);
+      animation: navFadeIn 0.3s ease;
+    }
+    .lang-menu.show { display: block; }
+    .lang-menu button {
+      width: 100%;
+      text-align: left;
+      padding: 10px 15px;
+      border: none;
+      background: none;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-dark-blue);
+      border-radius: 10px;
+      transition: all 0.25s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .lang-menu button:hover {
+      background: rgba(41,171,226,0.08);
+      color: var(--brand-mid);
+      padding-left: 20px;
+    }
+    [dir="rtl"] .lang-menu { right: auto; left: 0; }
+    [dir="rtl"] .lang-menu button { text-align: right; flex-direction: row-reverse; }
+    [dir="rtl"] .lang-menu button:hover { padding-left: 15px; padding-right: 20px; }
+
+    /* ---- Custom hamburger ---- */
+    .navbar-toggler {
+      border: none !important;
+      box-shadow: none !important;
+      background: none;
+      padding: 8px;
+      order: 4;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+    }
+    .navbar__bar {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--color-primary);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    /* ---- Mobile close button ---- */
+    .navbar__mobile-close {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.3rem;
+      color: var(--color-dark-blue);
+      padding: 0.75rem 1.25rem;
+      width: 100%;
+      text-align: right;
+      transition: color 0.3s ease;
+      line-height: 1;
+    }
+    .navbar__mobile-close:hover { color: var(--color-primary); }
+
+    /* ---- RTL navbar order ---- */
+    [dir="rtl"] .navbar__brand     { order: 1; }
+    [dir="rtl"] #navMenu           { order: 2; }
+    [dir="rtl"] .navbar__actions { order: 3; margin-left: 0; margin-right: 1.25rem; }
+    /* RTL row only on desktop */
+    @media (min-width: 992px) {
+      [dir="rtl"] .navbar-nav { flex-direction: row !important; }
+    }
+
+    /* RTL underline from right */
+    [dir="rtl"] .navbar-nav .nav-link.active::after {
+      transform-origin: right center;
+    }
+    [dir="rtl"] .navbar__mobile-close { text-align: left; }
+
+    /* ---- Mobile (≤ lg) ---- */
+    @media (max-width: 991.98px) {
+      .navbar {
+        padding: 12px 0 !important;
+        min-height: 70px !important;
+      }
+      .navbar__logo {
+        height: 48px !important;
+        width: 48px !important;
+      }
+      .navbar__brand-text {
+        font-size: 1.35rem !important;
+      }
+
+      /* Force single row */
+      .navbar__container {
+          display: flex !important;
+          flex-direction: row !important;
+          flex-wrap: nowrap !important;
+          align-items: center !important;
+          justify-content: space-between !important;
+      }
+
+      .navbar__brand { order: 1 !important; margin: 0 !important; }
+      .navbar__actions {
+        order: 2 !important;
+        margin: 0 auto 0 0.75rem !important;
+        flex-shrink: 0 !important;
+      }
+      [dir="rtl"] .navbar__actions {
+        margin: 0 0.75rem 0 auto !important;
+      }
+      .navbar-toggler {
+        order: 3 !important;
+        margin: 0 !important;
+        padding: 6px !important;
+      }
+
+      /* Premium Dropdown Overlay */
+      .navbar-collapse {
+        position: absolute;
+        top: 100%;
+        left: 10px;
+        right: 10px;
+        background: #ffffff !important;
+        border-radius: 20px;
+        box-shadow: 0 15px 40px rgba(0, 24, 60, 0.18);
+        margin-top: 12px;
+        padding: 1.5rem 1rem !important;
+        border: 1px solid rgba(41, 171, 226, 0.12) !important;
+        z-index: 1100;
+        border-top: 2px solid var(--color-primary) !important;
+      }
+
+      .navbar-nav {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 8px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+
+      .navbar-nav .nav-link {
+        width: 100%;
+        text-align: center;
+        padding: 12px !important;
+        font-size: 1.05rem !important;
+        border-radius: 12px;
+      }
+
+      .navbar-nav .nav-link.active {
+        background: var(--brand-gradient);
+        color: #fff !important;
+      }
+
+      .navbar__mobile-close {
+        display: block !important;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: auto !important;
+        padding: 5px !important;
+      }
+      [dir="rtl"] .navbar__mobile-close {
+        left: 10px;
+        right: auto;
+      }
+    }
+
+    @media (max-width: 450px) {
+      .nav-btn-register span { display: none; }
+      .nav-btn-register { padding: 8px 12px; }
+      .navbar__brand-text { display: none !important; }
+      .navbar__actions { gap: 6px; }
+    }
+
+    /* =============================================
+       INVESTORS HERO (UPGRADED)
+    ============================================= */
+    .invest-hero {
+      position: relative;
+      padding: 12rem 0 10rem;
+      background: linear-gradient(135deg, rgba(0, 24, 60, 0.55) 0%, rgba(31, 131, 200, 0.35) 100%), url('assets/images/investors-hero-new.png') center/cover fixed;
+      overflow: hidden;
+    }
+    .invest-hero::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 120px;
+      background: linear-gradient(to top, var(--color-bg), transparent);
+      z-index: 1;
+    }
+    .invest-hero__shape {
+      position: absolute; right: -5%; top: -10%; width: 50vw; height: 50vw;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      border-radius: 50%; z-index: 0;
+    }
+    .invest-hero__content { position: relative; z-index: 2; text-align: center; color: #fff; }
+    .invest-hero h1 {
+      transition: all 0.4s ease;
+      cursor: default;
+      display: inline-block;
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-weight: 500;
+      margin-bottom: 1.25rem;
+      letter-spacing: -0.01em;
+      color: #ffffff;
+      text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    }
+    .invest-hero p {
+      font-size: 0.95rem; 
+      color: rgba(255,255,255,0.95); 
+      max-width: 800px; 
+      margin: 0 auto; 
+      line-height: 1.8; 
+      font-weight: 400; 
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); 
+      display: block; 
+    }
+    
+    .invest-hero h1:hover {
+        color: #5CE0FF;
+        text-shadow: 0 0 25px rgba(92,224,255,0.7), 0 4px 12px rgba(0,0,0,0.4);
+    }
+
+    .section-title {
+      font-size: clamp(18px, 2.8vw, 26px);
+      font-weight: 700;
+      color: var(--color-dark-blue);
+      line-height: 1.2;
+      background: var(--color-dark-blue);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      transition: all 0.4s ease;
+      display: block;
+      width: fit-content;
+      cursor: default;
+    }
+    .text-center .section-title { margin-left: auto; margin-right: auto; }
+    .section-title:hover {
+        background: var(--brand-gradient);
+        -webkit-background-clip: text;
+        background-clip: text;
+        transform: translateY(-2px);
+    }
+
+    /* =============================================
+       FINANCIAL HIGHLIGHTS (UPGRADED)
+    ============================================= */
+    .highlights-section { padding: 0 0 6rem; margin-top: -80px; position: relative; z-index: 5; }
+    .highlight-card {
+      background: #ffffff;
+      border: 1px solid rgba(41,171,226,0.1);
+      padding: 3rem 2rem;
+      border-radius: 24px;
+      box-shadow: 0 20px 50px rgba(0, 24, 60, 0.08);
+      text-align: center;
+      transition: var(--transition);
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .highlight-card::before {
+      content: ''; position: absolute; top:0; left:0; right:0; height:4px;
+      background: linear-gradient(90deg, var(--color-primary), var(--color-light-accent));
+      transform: scaleX(0); transition: 0.4s ease; transform-origin: left;
+    }
+    .highlight-card:hover::before { transform: scaleX(1); }
+    .highlight-card:hover { transform: translateY(-12px); box-shadow: 0 30px 60px rgba(0, 24, 60, 0.12); border-color: rgba(41,171,226,0.3); }
+    
+    .hi-icon-wrapper {
+      width: 80px; height: 80px; border-radius: 20px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1.5rem; transition: var(--transition);
+    }
+    .hi-icon-wrapper.blue { background: rgba(41,171,226,0.1); color: var(--color-primary); }
+    .hi-icon-wrapper.green { background: rgba(32, 201, 151, 0.1); color: #20c997; }
+    .hi-icon-wrapper.red { background: rgba(245, 54, 92, 0.1); color: #f5365c; }
+    .highlight-card:hover .hi-icon-wrapper { transform: scale(1.1) rotate(5deg); }
+    .hi-icon { font-size: 1.8rem; }
+
+    .hi-num { font-size: 2.4rem; font-weight: 700; line-height: 1; margin-bottom: 0.8rem; background: linear-gradient(135deg, var(--color-dark-blue), var(--color-primary)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .hi-label { font-size: 0.82rem; font-weight: 600; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 1px; }
+
+    /* =============================================
+       REPORTS SECTION (UPGRADED)
+    ============================================= */
+    .reports-section { padding: 4rem 0 8rem; }
+
+    .report-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 1.4rem 2rem;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid rgba(41,171,226,0.08);
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .report-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 4px;
+      background: var(--brand-gradient);
+      border-radius: 4px 0 0 4px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .report-card:hover::before { opacity: 1; }
+    .report-card:hover { box-shadow: var(--shadow-md); border-color: rgba(41,171,226,0.25); transform: translateX(6px); }
+
+    .report-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      background: rgba(41,171,226,0.08);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      color: var(--color-primary);
+      font-size: 1.3rem;
+      transition: var(--transition);
+    }
+    .report-card:hover .report-icon { background: var(--color-primary); color: #fff; }
+
+    .report-content { flex: 1; min-width: 0; }
+    .report-badge { display: inline-block; padding: 2px 10px; background: rgba(41,171,226,0.1); color: var(--color-primary); font-size: 0.7rem; font-weight: 700; border-radius: 50px; margin-bottom: 0.35rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    .report-title { font-size: 0.95rem; font-weight: 600; color: var(--color-dark-blue); margin-bottom: 0; line-height: 1.4; transition: var(--transition); cursor: default; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .report-card:hover .report-title { color: var(--color-primary); }
+    .report-date { font-size: 0.75rem; color: var(--color-text-muted); display: flex; align-items: center; gap: 5px; margin-top: 0.25rem; }
+
+    .report-actions { flex-shrink: 0; }
+    .btn-download {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--color-bg); color: var(--color-dark-blue);
+      border-radius: 10px; padding: 9px 18px; font-weight: 600; font-size: 0.8rem;
+      transition: var(--transition); white-space: nowrap;
+      border: 1px solid rgba(41,171,226,0.15);
+    }
+    .btn-download i { font-size: 0.95rem; color: var(--color-primary); transition: all 0.3s; }
+    .btn-download:hover { background: var(--color-primary); color: #fff; border-color: var(--color-primary); }
+    .btn-download:hover i { color: #fff; transform: translateY(2px); }
+
+    [dir="rtl"] .report-card { flex-direction: row-reverse; }
+    [dir="rtl"] .report-card::before { left: auto; right: 0; border-radius: 0 4px 4px 0; }
+    [dir="rtl"] .report-card:hover { transform: translateX(-6px); }
+
+    /* =============================================
+       FOOTER
+    ============================================= */
+    .footer {
+      background: linear-gradient(to bottom, #00132b, #000c1d);
+      color: var(--color-white);
+      padding: 7rem 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .footer::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--brand-gradient);
+      opacity: 0.8;
+      box-shadow: 0 0 20px rgba(31, 131, 200, 0.4);
+    }
+    /* Floating Decorative Orbs for Footer */
+    .footer-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      z-index: 0;
+      opacity: 0.12;
+      pointer-events: none;
+    }
+    .footer-orb--1 {
+      width: 400px; height: 400px;
+      background: var(--brand-deep);
+      top: -100px; left: -100px;
+    }
+    .footer-orb--2 {
+      width: 300px; height: 300px;
+      background: var(--brand-light);
+      bottom: 100px; right: -50px;
+    }
+    .footer .container { position: relative; z-index: 2; }
+
+    .footer__brand-text {
+      font-size: 1.6rem; font-weight: 800; color: #ffffff; letter-spacing: 0.05em;
+      background: #ffffff; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+      transition: all 0.4s ease; cursor: pointer;
+    }
+    .footer__brand-text:hover {
+      background: var(--brand-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+    .footer__logo { height: 50px; width: 50px; object-fit: cover; border-radius: 50%; border: 2px solid rgba(41, 171, 226, 0.3); box-shadow: 0 0 20px rgba(41, 171, 226, 0.2); }
+    .footer__desc { font-size: 0.8rem; color: rgba(255,255,255,0.5); line-height: 1.8; margin-top: 1rem; max-width: 320px; }
+
+    .footer__heading {
+      font-size: 0.9rem; font-weight: 800; color: var(--color-white); margin-bottom: 1.2rem;
+      position: relative;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      background: #ffffff;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      transition: all 0.4s ease;
+      cursor: default;
+    }
+    .footer__heading:hover {
+      background: var(--brand-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+
+    .footer__links { list-style: none; padding: 0; }
+    .footer__links li { margin-bottom: 0.8rem; }
+    .footer__links a {
+      font-size: 0.8rem; color: rgba(255,255,255,0.6); transition: all 0.3s ease;
+      display: inline-flex; align-items: center; gap: 10px;
+    }
+    .footer__links a:hover { 
+      color: var(--brand-light); 
+      transform: translateX(8px);
+    }
+    .footer__links a i { 
+      font-size: 0.7rem; 
+      opacity: 0.5;
+      transition: transform 0.3s ease;
+    }
+    .footer__links a:hover i {
+      transform: scale(1.4);
+      color: var(--brand-light);
+    }
+
+    .footer__contact-item {
+      display: flex; align-items: flex-start; gap: 15px; font-size: 0.8rem;
+      color: rgba(255,255,255,0.6); margin-bottom: 1.25rem; transition: color 0.3s;
+    }
+    .footer__contact-item:hover { color: var(--color-white); }
+    .footer__contact-item i {
+      font-size: 1.1rem;
+      color: var(--brand-light);
+      background: rgba(47, 185, 255, 0.1);
+      width: 40px; height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border: 1px solid rgba(47, 185, 255, 0.15);
+      transition: all 0.3s ease;
+    }
+    .footer__contact-item:hover i {
+      background: var(--brand-gradient);
+      color: #fff;
+      transform: scale(1.1) rotate(-5deg);
+      box-shadow: 0 4px 15px rgba(31, 131, 200, 0.3);
+    }
+    .footer__contact-item a { color: inherit; transition: color 0.3s; }
+    .footer__contact-item a:hover { color: var(--brand-light); }
+
+    .footer__bottom {
+      padding: 2rem 0;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      margin-top: 4rem;
+    }
+
+    .footer__social { display: flex; gap: 12px; }
+    .footer__social a {
+      width: 44px; height: 44px;
+      background: var(--brand-deep);
+      border: none;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-white);
+      font-size: 1.2rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    .footer__social a:hover {
+      background: var(--brand-gradient);
+      border-color: transparent;
+      color: var(--color-white);
+      transform: translateY(-5px) rotate(8deg);
+      box-shadow: 0 10px 25px rgba(31, 131, 200, 0.4);
+    }
+
+    .footer__copyright { font-size: 0.75rem; color: rgba(255,255,255,0.3); }
+    [dir="rtl"] .footer__links a:hover { transform: translateX(-5px); }
+    /* ---- Mobile (≤ lg) ---- */
+    @media (max-width: 991.98px) {
+      .navbar { padding: 10px 0 !important; min-height: auto !important; }
+      .navbar__container {
+          display: flex !important;
+          flex-direction: row !important;
+          flex-wrap: nowrap !important;
+          align-items: center !important;
+          justify-content: space-between !important;
+          position: relative;
+      }
+      .navbar__brand { order: 1 !important; margin: 0 !important; flex-shrink: 1 !important; }
+      .navbar__actions { order: 2 !important; margin: 0 auto 0 1rem !important; flex-shrink: 0 !important; }
+      [dir="rtl"] .navbar__actions { margin: 0 1rem 0 auto !important; }
+      .navbar-toggler { order: 3 !important; margin: 0 !important; flex-shrink: 0 !important; }
+
+      .navbar-collapse {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--color-white);
+        border-radius: 20px;
+        box-shadow: 0 20px 50px rgba(0, 24, 60, 0.15);
+        margin-top: 10px;
+        padding: 2rem 1rem;
+        border: 1px solid rgba(41, 171, 226, 0.1);
+        z-index: 1000;
+      }
+      .navbar-collapse.show .navbar__mobile-close { display: block; position: absolute; top: 15px; right: 15px; }
+      [dir="rtl"] .navbar-collapse.show .navbar__mobile-close { left: 15px; right: auto; }
+      
+      .navbar-nav {
+        flex-direction: column !important;
+        align-items: center !important;
+        padding: 0;
+        gap: 8px;
+        margin-top: 10px;
+      }
+      .navbar-nav .nav-link { 
+          width: 100%; 
+          text-align: center; 
+          padding: 12px !important;
+          font-size: 1.1rem !important;
+      }
+
+      /* Footer Responsive Fixes */
+      .footer { text-align: center !important; }
+      .footer .d-flex { justify-content: center !important; align-items: center !important; }
+      .footer__desc { margin: 1.5rem auto !important; text-align: center !important; max-width: 350px; }
+      .footer__social { justify-content: center !important; }
+      .footer__contact-item { flex-direction: column !important; align-items: center !important; text-align: center !important; gap: 8px !important; margin-bottom: 2.5rem !important; }
+      .footer__contact-item i { margin-bottom: 4px; }
+      .footer__heading { text-align: center !important; margin-top: 2.5rem !important; margin-bottom: 1.5rem !important; }
+      .footer__links { text-align: center !important; padding: 0 !important; }
+      .footer__links a { justify-content: center !important; }
+      
+      [dir="rtl"] .footer,
+      [dir="rtl"] .footer * { text-align: center !important; }
+      [dir="rtl"] .footer__heading::after { left: 50% !important; right: auto !important; transform: translateX(-50%) !important; }
+    }
+    @media (max-width: 450px) {
+      .nav-btn-register span { display: none; }
+      .nav-btn-register { padding: 8px 12px; }
+      .navbar__brand-text { display: none; }
+      .navbar__actions { gap: 6px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg sticky-top" id="mainNavbar">
+    <div class="container navbar__container">
+
+      <!-- Brand -->
+      <a class="navbar__brand navbar-brand" href="index.html">
+        <img src="assets/images/logo.png" alt="Avantic Pharma Logo" class="navbar__logo" />
+        <span class="navbar__brand-text" data-en="AVANTIC" data-ar="أفانتيك">AVANTIC</span>
+      </a>
+
+      <!-- Actions (Login + Lang) -->
+      <div class="navbar__actions d-flex align-items-center">
+        <a href="login.html" class="nav-btn-register me-2">
+          <i class="bi bi-person-fill"></i>
+          <span data-en="LOGIN" data-ar="دخول">LOGIN</span>
+        </a>
+        <div class="lang-dropdown">
+          <button class="lang-toggle" id="langToggleBtn" aria-label="Select Language">
+            <i class="bi bi-globe"></i>
+          </button>
+          <div class="lang-menu" id="langMenu">
+            <button onclick="changeLang('en')"><span>English</span></button>
+            <button onclick="changeLang('ar')"><span>العربية</span></button>
+            <button onclick="changeLang('fr')"><span>Français</span></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Toggler -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar__bar"></span>
+        <span class="navbar__bar"></span>
+        <span class="navbar__bar"></span>
+      </button>
+
+      <!-- Menu -->
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav mx-auto gap-1">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html" data-en="Home" data-ar="الرئيسية">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="products.html" data-en="Products" data-ar="المنتجات">Products</a>
+          </li>
+
+          <!-- Services Mega Dropdown -->
+          <li class="nav-item mega-dropdown">
+            <a class="nav-link" href="services.html">
+              <span data-en="Services" data-ar="الخدمات">Services</span>
+              <i class="bi bi-chevron-down ms-1" style="font-size: 0.7rem;"></i>
+            </a>
+
+            <div class="mega-menu">
+               <div class="container">
+                  <div class="row g-4 align-items-center">
+                     <!-- Left: Preview -->
+                     <div class="col-lg-5 d-none d-lg-block">
+                        <div class="mega-menu__preview">
+                           <img src="assets/images/service-preview.jpg" alt="Service Preview">
+                           <div class="mega-menu__preview-content">
+                              <h4 data-en="Scientific Excellence" data-ar="تميز علمي">Scientific Excellence</h4>
+                              <p data-en="Unlocking health potential with innovative pharmaceutical services." data-ar="إطلاق إمكانات الصحة من خلال خدمات صيدلانية مبتكرة.">Unlocking health potential with innovative pharmaceutical services.</p>
+                              <a href="services.html" class="mega-menu__cta-btn">
+                                <span data-en="All Services" data-ar="جميع الخدمات">All Services</span>
+                                <i class="bi bi-arrow-right"></i>
+                              </a>
+                           </div>
+                        </div>
+                     </div>
+                     <!-- Right: Links -->
+                     <div class="col-lg-7">
+                        <div class="mega-menu__links">
+                           <div class="row g-4 align-items-center">
+                              <div class="col-md-6">
+                                 <ul class="mega-menu__list">
+                                    <li><a href="services.html"><i class="bi bi-chevron-right small"></i> <span data-en="Laboratory Research" data-ar="أبحاث المختبرات">Laboratory Research</span></a></li>
+                                    <li><a href="single-service.html"><i class="bi bi-chevron-right small"></i> <span data-en="Clinical Testing" data-ar="الاختبارات السريرية">Clinical Testing</span></a></li>
+                                    <li><a href="single-service.html"><i class="bi bi-chevron-right small"></i> <span data-en="Standard Optimization" data-ar="تحسين المعايير">Standard Optimization</span></a></li>
+                                    <li><a href="single-service.html"><i class="bi bi-chevron-right small"></i> <span data-en="Pharma Logistics" data-ar="الخدمات اللوجستية للأدوية">Pharma Logistics</span></a></li>
+                                 </ul>
+                              </div>
+                              <div class="col-md-6">
+                                 <ul class="mega-menu__list">
+                                    <li><a href="single-service.html"><i class="bi bi-chevron-right small"></i> <span data-en="GMPC Compliance" data-ar="امتثال GMPC">GMPC Compliance</span></a></li>
+                                    <li><a href="single-service.html"><i class="bi bi-chevron-right small"></i> <span data-en="Global Distribution" data-ar="التوزيع العالمي">Global Distribution</span></a></li>
+                                    <li><a href="single-service.html"><i class="bi bi-chevron-right small"></i> <span data-en="Retail Partnership" data-ar="شراكة التجزئة">Retail Partnership</span></a></li>
+                                    <li><a href="single-service.html"><i class="bi bi-chevron-right small"></i> <span data-en="Innovation Center" data-ar="مركز الابتكار">Innovation Center</span></a></li>
+                                 </ul>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="partners.html" data-en="Partners" data-ar="شركاؤنا">Partners</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="investors.html" data-en="Investors" data-ar="المستثمرون">Investors</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="news.html" data-en="News" data-ar="الأخبار">News</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about.html" data-en="About Us" data-ar="من نحن">About Us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contact.html" data-en="Contact Us" data-ar="تواصل معنا">Contact Us</a>
+          </li>
+        </ul>
+      </div>
+      <div class="nav-progress" id="scrollProgress"></div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="invest-hero">
+    <div class="invest-hero__shape"></div>
+    <div class="container invest-hero__content reveal">
+      <h1 data-en="Investor Relations" data-ar="علاقات المستثمرين">Investor Relations</h1>
+      <p data-en="Driving growth and delivering long-term value through scientific excellence and unmatched quality." data-ar="دفع عجلة النمو وتقديم قيمة طويلة الأمد من خلال التميز العلمي للجودة التي لا تضاهى في مجال الأدوية الرائدة.">Driving growth and delivering long-term value through scientific excellence and unmatched quality in pioneering pharmaceuticals.</p>
+    </div>
+  </header>
+
+  <!-- Key Metrics (Upgraded) -->
+  <section class="highlights-section">
+    <div class="container">
+      <div class="row g-4 justify-content-center">
+        <div class="col-lg-4 col-md-6 reveal">
+          <div class="highlight-card">
+            <div class="hi-icon-wrapper blue"><i class="bi bi-graph-up-arrow hi-icon"></i></div>
+            <div class="hi-num" data-en="$1.4B" data-ar="1.4 مليار $">$1.4B</div>
+            <div class="hi-label" data-en="Annual Revenue (2024)" data-ar="الإيرادات السنوية (2024)">Annual Revenue (2024)</div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 reveal" style="transition-delay: 100ms;">
+          <div class="highlight-card">
+            <div class="hi-icon-wrapper blue"><i class="bi bi-percent hi-icon"></i></div>
+            <div class="hi-num" data-en="18.5%" data-ar="18.5%">18.5%</div>
+            <div class="hi-label" data-en="YoY Growth Rate" data-ar="معدل النمو السنوي">YoY Growth Rate</div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 reveal" style="transition-delay: 200ms;">
+          <div class="highlight-card">
+            <div class="hi-icon-wrapper blue"><i class="bi bi-diagram-3 hi-icon"></i></div>
+            <div class="hi-num" data-en="$280M" data-ar="280 مليون $">$280M</div>
+            <div class="hi-label" data-en="R&D Investment" data-ar="الاستثمار في البحث والتطوير">R&D Investment</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reports Area (Upgraded Grid) -->
+  <section class="reports-section">
+    <div class="container">
+      <div class="text-center mb-5 reveal">
+        <span class="section-tag" data-en="Financial Library" data-ar="المكتبة المالية">Financial Library</span>
+        <h2 class="section-title mx-auto" data-en="Latest Reports & Filings" data-ar="أحدث التقارير والإفصاحات">Latest Reports & Filings</h2>
+        <p class="text-muted mx-auto mt-3" style="max-width: 600px;" data-en="Access our comprehensive collection of financial reports, presentations, and sustainability documentation." data-ar="قم بالوصول الشامل إلى مجموعتنا من التقارير المالية والعروض التقديمية ووثائق الاستدامة.">Access our comprehensive collection of financial reports, presentations, and sustainability documentation.</p>
+      </div>
+
+      <div class="d-flex flex-column gap-3">
+
+        <!-- Report 1 -->
+        <div class="report-card reveal">
+          <div class="report-icon"><i class="bi bi-file-earmark-bar-graph"></i></div>
+          <div class="report-content">
+            <span class="report-badge" data-en="Q4 Report" data-ar="تقرير الربع الرابع">Q4 Report</span>
+            <h4 class="report-title" data-en="Q4 2024 Financial Results" data-ar="النتائج المالية للربع الرابع 2024">Q4 2024 Financial Results</h4>
+            <div class="report-date"><i class="bi bi-calendar-event"></i> <span data-en="Feb 12, 2025" data-ar="12 فبراير 2025">Feb 12, 2025</span></div>
+          </div>
+          <div class="report-actions">
+            <a href="#" class="btn-download">
+              <span data-en="Download PDF" data-ar="تحميل PDF">Download PDF</span><i class="bi bi-cloud-download"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Report 2 -->
+        <div class="report-card reveal" style="transition-delay: 80ms;">
+          <div class="report-icon"><i class="bi bi-file-earmark-text"></i></div>
+          <div class="report-content">
+            <span class="report-badge" data-en="Annual" data-ar="سنوي">Annual</span>
+            <h4 class="report-title" data-en="Avantic Annual Report 2024" data-ar="تقرير أفانتيك السنوي 2024">Avantic Annual Report 2024</h4>
+            <div class="report-date"><i class="bi bi-calendar-event"></i> <span data-en="Jan 28, 2025" data-ar="28 يناير 2025">Jan 28, 2025</span></div>
+          </div>
+          <div class="report-actions">
+            <a href="#" class="btn-download">
+              <span data-en="Download PDF" data-ar="تحميل PDF">Download PDF</span><i class="bi bi-cloud-download"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Report 3 -->
+        <div class="report-card reveal" style="transition-delay: 160ms;">
+          <div class="report-icon"><i class="bi bi-file-earmark-slides"></i></div>
+          <div class="report-content">
+            <span class="report-badge" data-en="Presentation" data-ar="عرض تقديمي">Presentation</span>
+            <h4 class="report-title" data-en="Investor Presentation Deck" data-ar="ملف العرض التقديمي للمستثمرين">Investor Presentation Deck</h4>
+            <div class="report-date"><i class="bi bi-calendar-event"></i> <span data-en="Nov 05, 2024" data-ar="05 نوفمبر 2024">Nov 05, 2024</span></div>
+          </div>
+          <div class="report-actions">
+            <a href="#" class="btn-download">
+              <span data-en="Download PPT" data-ar="تحميل PPT">Download PPT</span><i class="bi bi-cloud-download"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Report 4 -->
+        <div class="report-card reveal" style="transition-delay: 240ms;">
+          <div class="report-icon"><i class="bi bi-leaf"></i></div>
+          <div class="report-content">
+            <span class="report-badge" data-en="ESG Report" data-ar="تقرير الاستدامة">ESG Report</span>
+            <h4 class="report-title" data-en="Sustainability & ESG 2024" data-ar="الاستدامة والبيئة 2024">Sustainability & ESG 2024</h4>
+            <div class="report-date"><i class="bi bi-calendar-event"></i> <span data-en="Sep 15, 2024" data-ar="15 سبتمبر 2024">Sep 15, 2024</span></div>
+          </div>
+          <div class="report-actions">
+            <a href="#" class="btn-download">
+              <span data-en="Download PDF" data-ar="تحميل PDF">Download PDF</span><i class="bi bi-cloud-download"></i>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+    <footer class="footer">
+    <!-- Decorative Orbs -->
+    <div class="footer-orb footer-orb--1"></div>
+    <div class="footer-orb footer-orb--2"></div>
+
+    <div class="container">
+      <div class="row g-5">
+        <div class="col-md-6 col-lg-3">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <img src="assets/images/logo.png" alt="Avantic Logo" class="footer__logo" />
+            <span class="footer__brand-text" data-en="AVANTIC" data-ar="أفانتيك">AVANTIC</span>
+          </div>
+          <p class="footer__desc" data-en="Advancing human health through innovative pharmaceutical solutions. Science Forward, Healthier World." data-ar="تطوير صحة الإنسان من خلال حلول دوائية مبتكرة. العلم للأمام، عالم أكثر صحة.">Advancing human health through innovative pharmaceutical solutions. Science Forward, Healthier World.</p>
+
+          <div class="footer__social mt-4">
+            <a href="#" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+            <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+            <a href="#" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>
+            <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-2">
+          <h4 class="footer__heading" data-en="Quick Links" data-ar="روابط سريعة">Quick Links</h4>
+          <ul class="footer__links">
+            <li><a href="index.html"><i class="bi bi-chevron-right"></i><span data-en="Home" data-ar="الرئيسية">Home</span></a></li>
+            <li><a href="products.html"><i class="bi bi-chevron-right"></i><span data-en="Products" data-ar="المنتجات">Products</span></a></li>
+            <li><a href="news.html"><i class="bi bi-chevron-right"></i><span data-en="News" data-ar="الأخبار">News</span></a></li>
+            <li><a href="about.html"><i class="bi bi-chevron-right"></i><span data-en="About Us" data-ar="عن الشركة">About Us</span></a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+          <h4 class="footer__heading" data-en="Contact Info" data-ar="معلومات التواصل">Contact Info</h4>
+          <div class="footer__contact-item">
+            <i class="bi bi-envelope-fill"></i>
+            <a href="mailto:info@avanticpharma.com">info@avanticpharma.com</a>
+          </div>
+          <div class="footer__contact-item">
+            <i class="bi bi-telephone-fill"></i>
+            <span dir="ltr">+20 10 90080600</span>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <h4 class="footer__heading" data-en="Address &amp; Hours" data-ar="العنوان والمواعيد">Address &amp; Hours</h4>
+          <div class="footer__contact-item">
+            <i class="bi bi-geo-alt-fill"></i>
+            <span data-en="AVANTIC Pharmaceuticals, Cairo, Egypt" data-ar="أفانتيك فارما للأدوية، القاهرة، مصر">AVANTIC Pharmaceuticals, Cairo, Egypt</span>
+          </div>
+          <div class="footer__contact-item">
+            <i class="bi bi-clock-fill"></i>
+            <div class="d-flex flex-column">
+                <span data-en="Mon - Fri: 08:30 AM - 05:30 PM" data-ar="الاثنين - الجمعة: 08:30 ص - 05:30 م">Mon - Fri: 08:30 AM - 05:30 PM</span>
+                <span data-en="Sat - Sun: Closed" data-ar="السبت - الأحد: مغلق">Sat - Sun: Closed</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer__bottom d-flex flex-column flex-md-row align-items-center justify-content-center gap-3 mt-4">
+        <p class="footer__copyright mb-0">
+          <span data-en="© 2025 Avantic Pharma. All rights reserved." data-ar="© 2025 أفانتيك فارما. جميع الحقوق محفوظة.">© 2025 Avantic Pharma. All rights reserved.</span>
+          &nbsp;|&nbsp;
+          <a href="#" style="color: rgba(255,255,255,0.4); font-size: 0.8rem;" data-en="Privacy Policy" data-ar="سياسة الخصوصية">Privacy Policy</a>
+          &nbsp;|&nbsp;
+          <a href="#" style="color: rgba(255,255,255,0.4); font-size: 0.8rem;" data-en="Terms of Use" data-ar="شروط الاستخدام">Terms of Use</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    (function () {
+      /* ── Language Toggle Logic ── */
+      function toggleLang() {
+        const html = document.documentElement;
+        const body = document.body;
+        const currentLang = html.getAttribute('lang') || 'en';
+        const isRTL = currentLang === 'ar';
+        const nextLang = isRTL ? 'en' : 'ar';
+
+        if (nextLang === 'ar') {
+          html.setAttribute('lang', 'ar');
+          html.setAttribute('dir', 'rtl');
+          body.classList.add('rtl');
+          localStorage.setItem('lang', 'ar');
+          document.querySelectorAll('.footer__links i.bi-chevron-right').forEach(icon => icon.classList.replace('bi-chevron-right', 'bi-chevron-left'));
+        } else {
+          html.setAttribute('lang', 'en');
+          html.setAttribute('dir', 'ltr');
+          body.classList.remove('rtl');
+          localStorage.setItem('lang', 'en');
+          document.querySelectorAll('.footer__links i.bi-chevron-left').forEach(icon => icon.classList.replace('bi-chevron-left', 'bi-chevron-right'));
+        }
+
+        document.querySelectorAll('[data-en]').forEach(el => {
+          el.textContent = (nextLang === 'ar') ? el.getAttribute('data-ar') : el.getAttribute('data-en');
+        });
+      }
+      window.toggleLang = toggleLang;
+
+      document.addEventListener('DOMContentLoaded', () => {
+        // Init Lang
+        const savedLang = localStorage.getItem('lang') || 'en';
+        if (savedLang === 'ar') {
+          const html = document.documentElement;
+          html.setAttribute('lang', 'ar');
+          html.setAttribute('dir', 'rtl');
+          document.body.classList.add('rtl');
+          document.querySelectorAll('[data-en]').forEach(el => {
+            el.textContent = el.getAttribute('data-ar');
+          });
+        }
+
+        const langBtn = document.getElementById('langToggleBtn');
+        const langMenu = document.getElementById('langMenu');
+
+        if (langBtn) {
+          langBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            langMenu.classList.toggle('show');
+          });
+        }
+
+        window.addEventListener('click', () => {
+          if (langMenu) langMenu.classList.remove('show');
+        });
+
+        window.changeLang = function(langCode) {
+          if (langCode === 'fr') {
+            alert('French language content is coming soon!');
+            return;
+          }
+          const currentLang = document.documentElement.getAttribute('lang');
+          if (langCode !== currentLang) {
+            toggleLang();
+          }
+        }
+
+        // Header Scroll Effect
+        const navbar = document.getElementById('mainNavbar');
+        const progress = document.getElementById('scrollProgress');
+        window.addEventListener('scroll', () => {
+          if (window.scrollY > 30) {
+            navbar.classList.add('scrolled');
+          } else {
+            navbar.classList.remove('scrolled');
+          }
+
+          if (progress) {
+            const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (window.scrollY / h) * 100;
+            progress.style.width = scrolled + '%';
+          }
+        }, { passive: true });
+
+        // Intersection Observer for Reveal
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+            }
+          });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+      });
+    })();
+  </script>
+</body>
+</html>
