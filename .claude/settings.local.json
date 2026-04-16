@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep *)",
+      "Bash(python3 fix_navbar.py)",
+      "Bash(py fix_navbar.py)",
+      "Bash(node *)",
+      "Bash(del /f \"C:\\\\xampp4\\\\htdocs\\\\av-front\\\\fix_footer.js\")"
+    ]
+  }
+}
